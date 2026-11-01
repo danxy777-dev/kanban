@@ -1,0 +1,4140 @@
+// ==========================================
+// INITIAL DATA - Seed data for Kanban Flow
+// 100% Client-Side Static Data (localStorage fallback)
+// ==========================================
+
+(function (global) {
+  const INITIAL_LABELS = [
+  {
+    "id": "lbl-feat",
+    "name": "Funcionalidade",
+    "color": "indigo"
+  },
+  {
+    "id": "lbl-ui",
+    "name": "Design & UI",
+    "color": "purple"
+  },
+  {
+    "id": "lbl-perf",
+    "name": "Performance",
+    "color": "emerald"
+  },
+  {
+    "id": "lbl-bug",
+    "name": "Correção / QA",
+    "color": "rose"
+  },
+  {
+    "id": "lbl-docs",
+    "name": "Documentação",
+    "color": "cyan"
+  },
+  {
+    "id": "lbl-infra",
+    "name": "Arquitetura & Deploy",
+    "color": "amber"
+  }
+];
+
+  const INITIAL_BOARD = {
+  "id": "board-demo-1",
+  "title": "🚀 Projeto: Kanban Flow — Entrega Estática",
+  "description": "Quadro demonstrativo estruturado com o ciclo de vida completo de entrega de projeto (Backlog, A Fazer, Em Andamento, Revisão/Homologação e Concluído).",
+  "color": "indigo",
+  "icon": "Kanban",
+  "isFavorite": true,
+  "isArchived": false,
+  "order": 1,
+  "createdAt": "2026-10-22T21:32:21.728Z",
+  "updatedAt": "2026-11-01T21:32:21.728Z"
+};
+
+  const INITIAL_COLUMNS = [
+  {
+    "id": "col-backlog",
+    "boardId": "board-demo-1",
+    "title": "Backlog",
+    "subtitle": "Demandas pendentes",
+    "color": "#64748b",
+    "cardLimit": 15,
+    "order": 0,
+    "createdAt": "2026-10-22T21:32:21.728Z"
+  },
+  {
+    "id": "col-todo",
+    "boardId": "board-demo-1",
+    "title": "A Fazer / To Do",
+    "subtitle": "Planejado para execução imediata",
+    "color": "#3b82f6",
+    "cardLimit": 8,
+    "order": 1,
+    "createdAt": "2026-10-22T21:32:21.728Z"
+  },
+  {
+    "id": "col-inprogress",
+    "boardId": "board-demo-1",
+    "title": "Em Andamento / In Progress",
+    "subtitle": "Tarefas em desenvolvimento",
+    "color": "#f59e0b",
+    "cardLimit": 5,
+    "order": 2,
+    "createdAt": "2026-10-22T21:32:21.728Z"
+  },
+  {
+    "id": "col-review",
+    "boardId": "board-demo-1",
+    "title": "Revisão / Homologação",
+    "subtitle": "Testes, validação e QA",
+    "color": "#a855f7",
+    "cardLimit": 5,
+    "order": 3,
+    "createdAt": "2026-10-22T21:32:21.728Z"
+  },
+  {
+    "id": "col-done",
+    "boardId": "board-demo-1",
+    "title": "Concluído / Done",
+    "subtitle": "Entregas finalizadas",
+    "color": "#10b981",
+    "order": 4,
+    "createdAt": "2026-10-22T21:32:21.728Z"
+  }
+];
+
+  const INITIAL_CARDS = [
+  {
+    "id": "card-demo-1",
+    "boardId": "board-demo-1",
+    "columnId": "col-backlog",
+    "title": "Implementar modo PWA com Service Worker para cache offline de fontes",
+    "description": "Permitir que a aplicação possa ser instalada como aplicativo desktop/mobile com cache completo de ativos estáticos.",
+    "priority": "low",
+    "dueDate": "2026-11-15",
+    "labels": [
+      "lbl-infra",
+      "lbl-perf"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d1-1",
+        "text": "Criar arquivo manifest.webmanifest",
+        "completed": false
+      },
+      {
+        "id": "chk-d1-2",
+        "text": "Configurar estratégia Cache-First para fontes e ícones",
+        "completed": false
+      }
+    ],
+    "notes": "Demanda mapeada para evolução futura pós-entrega da v1.0.",
+    "links": [
+      {
+        "id": "lnk-d1",
+        "title": "MDN Progressive Web Apps",
+        "url": "https://developer.mozilla.org/pt-BR/docs/Web/Progressive_web_apps"
+      }
+    ],
+    "isArchived": false,
+    "order": 0,
+    "createdAt": "2026-10-24T21:32:21.728Z",
+    "updatedAt": "2026-11-01T21:32:21.728Z"
+  },
+  {
+    "id": "card-demo-2",
+    "boardId": "board-demo-1",
+    "columnId": "col-backlog",
+    "title": "Adicionar exportação de tarefas em formato CSV para planilhas",
+    "description": "Complementar as exportações atuais (.json e .md) com geração de arquivo CSV compatível com Excel e Google Sheets.",
+    "priority": "low",
+    "dueDate": null,
+    "labels": [
+      "lbl-feat",
+      "lbl-docs"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d2-1",
+        "text": "Mapear cabeçalhos CSV (ID, Título, Coluna, Prioridade, Prazo)",
+        "completed": false
+      },
+      {
+        "id": "chk-d2-2",
+        "text": "Tratar escape de aspas e quebras de linha",
+        "completed": false
+      }
+    ],
+    "notes": "A exportação em JSON e Markdown já está 100% operacional.",
+    "links": [],
+    "isArchived": false,
+    "order": 1,
+    "createdAt": "2026-10-25T21:32:21.728Z",
+    "updatedAt": "2026-11-01T21:32:21.728Z"
+  },
+  {
+    "id": "card-demo-3",
+    "boardId": "board-demo-1",
+    "columnId": "col-todo",
+    "title": "Configurar publicação automática no GitHub Pages",
+    "description": "Ativar o GitHub Pages nas configurações do repositório apontando para a branch principal na pasta raiz (/root).",
+    "priority": "high",
+    "dueDate": "2026-11-03",
+    "labels": [
+      "lbl-infra",
+      "lbl-docs"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d3-1",
+        "text": "Verificar caminhos relativos (./assets, ./css, ./js) no index.html",
+        "completed": true
+      },
+      {
+        "id": "chk-d3-2",
+        "text": "Fazer push do código para o repositório GitHub",
+        "completed": false
+      },
+      {
+        "id": "chk-d3-3",
+        "text": "Ativar Settings > Pages > Deploy from a branch (main / root)",
+        "completed": false
+      }
+    ],
+    "notes": "Todos os arquivos estáticos já estão prontos para deploy imediato.",
+    "links": [
+      {
+        "id": "lnk-d3",
+        "title": "GitHub Pages Documentation",
+        "url": "https://docs.github.com/pt/pages"
+      }
+    ],
+    "isArchived": false,
+    "order": 0,
+    "createdAt": "2026-10-27T21:32:21.728Z",
+    "updatedAt": "2026-11-01T21:32:21.728Z"
+  },
+  {
+    "id": "card-demo-4",
+    "boardId": "board-demo-1",
+    "columnId": "col-todo",
+    "title": "Preparar roteiro de demonstração prática para a banca",
+    "description": "Definir sequência de apresentação mostrando o quadro do TCC, filtros, métricas de produtividade e persistência local.",
+    "priority": "medium",
+    "dueDate": "2026-11-06",
+    "labels": [
+      "lbl-docs"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d4-1",
+        "text": "Apresentar visão geral das 5 etapas do fluxo Kanban",
+        "completed": true
+      },
+      {
+        "id": "chk-d4-2",
+        "text": "Demonstrar criação, movimentação Drag & Drop e edição de card",
+        "completed": false
+      },
+      {
+        "id": "chk-d4-3",
+        "text": "Exibir painel de Métricas e exportação de relatório Markdown",
+        "completed": false
+      }
+    ],
+    "notes": "Destacar que o sistema funciona 100% no navegador sem necessidade de backend.",
+    "links": [],
+    "isArchived": false,
+    "order": 1,
+    "createdAt": "2026-10-28T21:32:21.728Z",
+    "updatedAt": "2026-11-01T21:32:21.728Z"
+  },
+  {
+    "id": "card-demo-5",
+    "boardId": "board-demo-1",
+    "columnId": "col-inprogress",
+    "title": "Refinar responsividade e experiência de Drag and Drop em telas menores",
+    "description": "Ajustar espaçamentos das colunas, rolagem horizontal suave e botões de transferência rápida entre etapas.",
+    "priority": "urgent",
+    "dueDate": "2026-11-02",
+    "labels": [
+      "lbl-ui",
+      "lbl-perf"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d5-1",
+        "text": "Implementar feedback visual de coluna alvo ao arrastar cartão",
+        "completed": true
+      },
+      {
+        "id": "chk-d5-2",
+        "text": "Garantir menu rápido de movimentação para dispositivos móveis",
+        "completed": true
+      },
+      {
+        "id": "chk-d5-3",
+        "text": "Validar contraste no tema escuro e claro",
+        "completed": false
+      }
+    ],
+    "notes": "Suporte híbrido via HTML5 Drag & Drop e menu contextual rápido.",
+    "links": [],
+    "isArchived": false,
+    "order": 0,
+    "createdAt": "2026-10-28T21:32:21.728Z",
+    "updatedAt": "2026-11-01T21:32:21.728Z"
+  },
+  {
+    "id": "card-demo-6",
+    "boardId": "board-demo-1",
+    "columnId": "col-inprogress",
+    "title": "Consolidar indicadores do Dashboard e Métricas de Produtividade",
+    "description": "Exibir taxa de conclusão global, progresso de subtarefas e distribuição proporcional por etapa do fluxo.",
+    "priority": "high",
+    "dueDate": "2026-11-04",
+    "labels": [
+      "lbl-feat",
+      "lbl-ui"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d6-1",
+        "text": "Cálculo automático de tarefas concluídas e em andamento",
+        "completed": true
+      },
+      {
+        "id": "chk-d6-2",
+        "text": "Filtro por quadro específico na tela de Métricas",
+        "completed": true
+      },
+      {
+        "id": "chk-d6-3",
+        "text": "Destaque de tarefas urgentes e com prazo próximo",
+        "completed": true
+      }
+    ],
+    "notes": "Os gráficos se atualizam em tempo real a cada movimentação no quadro.",
+    "links": [],
+    "isArchived": false,
+    "order": 1,
+    "createdAt": "2026-10-29T21:32:21.728Z",
+    "updatedAt": "2026-11-01T21:32:21.728Z"
+  },
+  {
+    "id": "card-demo-7",
+    "boardId": "board-demo-1",
+    "columnId": "col-review",
+    "title": "Homologar persistência em localStorage e restauração de backup JSON",
+    "description": "Validar salvamento instantâneo no localStorage, fallback de primeira execução e importação/exportação de arquivos JSON.",
+    "priority": "high",
+    "dueDate": "2026-11-01",
+    "labels": [
+      "lbl-infra",
+      "lbl-bug"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d7-1",
+        "text": "Verificar carregamento inicial automático com dados padrão",
+        "completed": true
+      },
+      {
+        "id": "chk-d7-2",
+        "text": "Testar persistência após recarregar a página (F5)",
+        "completed": true
+      },
+      {
+        "id": "chk-d7-3",
+        "text": "Validar botão de Restaurar Dados Demonstrativos",
+        "completed": true
+      }
+    ],
+    "notes": "Testado tanto via protocolo file:// quanto em servidor HTTP estático.",
+    "links": [],
+    "isArchived": false,
+    "order": 0,
+    "createdAt": "2026-10-26T21:32:21.728Z",
+    "updatedAt": "2026-11-01T21:32:21.728Z"
+  },
+  {
+    "id": "card-demo-8",
+    "boardId": "board-demo-1",
+    "columnId": "col-review",
+    "title": "Validar atalhos de teclado globais e Busca Rápida (Ctrl+K)",
+    "description": "Testar navegação por teclado nos modais, atalho N para nova tarefa, D para alternar tema e ? para ajuda.",
+    "priority": "medium",
+    "dueDate": "2026-11-02",
+    "labels": [
+      "lbl-feat",
+      "lbl-ui"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d8-1",
+        "text": "Bloquear disparo de atalhos quando o foco estiver em inputs/textareas",
+        "completed": true
+      },
+      {
+        "id": "chk-d8-2",
+        "text": "Testar busca instantânea por título, descrição e subtarefas",
+        "completed": true
+      }
+    ],
+    "notes": "Atalhos seguem padrões de acessibilidade WAI-ARIA.",
+    "links": [],
+    "isArchived": false,
+    "order": 1,
+    "createdAt": "2026-10-27T21:32:21.728Z",
+    "updatedAt": "2026-11-01T21:32:21.728Z"
+  },
+  {
+    "id": "card-demo-9",
+    "boardId": "board-demo-1",
+    "columnId": "col-done",
+    "title": "Migração completa para arquitetura 100% Client-Side estática",
+    "description": "Remoção de dependências de servidor/backend, conversão de módulos para execução direta no navegador e caminhos relativos.",
+    "priority": "urgent",
+    "dueDate": "2026-10-30",
+    "labels": [
+      "lbl-infra",
+      "lbl-perf"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d9-1",
+        "text": "Eliminar dependência de APIs externas ou banco de dados remoto",
+        "completed": true
+      },
+      {
+        "id": "chk-d9-2",
+        "text": "Implementar camada de armazenamento síncrono/assíncrono via localStorage",
+        "completed": true
+      },
+      {
+        "id": "chk-d9-3",
+        "text": "Ajustar links de assets para caminhos relativos (./)",
+        "completed": true
+      }
+    ],
+    "notes": "Aplicação pronta para hospedagem estática gratuita no GitHub Pages.",
+    "links": [],
+    "isArchived": false,
+    "order": 0,
+    "createdAt": "2026-10-23T21:32:21.728Z",
+    "updatedAt": "2026-11-01T21:32:21.728Z"
+  },
+  {
+    "id": "card-demo-10",
+    "boardId": "board-demo-1",
+    "columnId": "col-done",
+    "title": "Estruturar Design System, Tema Dark/Light e Efeitos Sonoros Web Audio",
+    "description": "Configuração visual com paleta moderna, suporte nativo a modo escuro/claro, sintetizador sonoro sem arquivos externos e celebração com confetes.",
+    "priority": "medium",
+    "dueDate": "2026-10-28",
+    "labels": [
+      "lbl-ui",
+      "lbl-feat"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d10-1",
+        "text": "Definir variáveis CSS e tokens de cores semânticas",
+        "completed": true
+      },
+      {
+        "id": "chk-d10-2",
+        "text": "Implementar sintetizador Web Audio API para feedback tátil/sonoro",
+        "completed": true
+      },
+      {
+        "id": "chk-d10-3",
+        "text": "Integrar efeito de confetes ao concluir tarefas",
+        "completed": true
+      }
+    ],
+    "notes": "Interface validada com foco em usabilidade e clareza visual.",
+    "links": [],
+    "isArchived": false,
+    "order": 1,
+    "createdAt": "2026-10-22T21:32:21.728Z",
+    "updatedAt": "2026-11-01T21:32:21.728Z"
+  }
+];
+
+  const TCC_LABELS = [
+  {
+    "id": "lbl-visao",
+    "name": "Visão Computacional",
+    "color": "cyan"
+  },
+  {
+    "id": "lbl-mediapipe",
+    "name": "MediaPipe",
+    "color": "indigo"
+  },
+  {
+    "id": "lbl-matematica",
+    "name": "Matemática e Cinemática",
+    "color": "purple"
+  },
+  {
+    "id": "lbl-simulacao",
+    "name": "Simulação 3D",
+    "color": "emerald"
+  },
+  {
+    "id": "lbl-backend",
+    "name": "Backend e API",
+    "color": "amber"
+  },
+  {
+    "id": "lbl-interface",
+    "name": "Interface e Diagnóstico",
+    "color": "blue"
+  },
+  {
+    "id": "lbl-testes",
+    "name": "Testes e Validação",
+    "color": "rose"
+  },
+  {
+    "id": "lbl-docs",
+    "name": "Documentação Técnica",
+    "color": "slate"
+  },
+  {
+    "id": "lbl-apresentacao",
+    "name": "Apresentação do TCC",
+    "color": "purple"
+  },
+  {
+    "id": "lbl-hardware",
+    "name": "Arduino e Hardware",
+    "color": "amber"
+  },
+  {
+    "id": "lbl-correcoes",
+    "name": "Correções e Melhorias",
+    "color": "rose"
+  }
+];
+
+  const TCC_BOARD = {
+  "id": "board-tcc-inmoov",
+  "title": "TCC — InMoov Hand Control",
+  "description": "Sistema de Teleoperação e Simulação 3D com Visão Computacional — Gestão de Desenvolvimento, Validação e Apresentação",
+  "color": "indigo",
+  "icon": "Cpu",
+  "isFavorite": true,
+  "isArchived": false,
+  "order": 0,
+  "createdAt": "2026-10-29T19:23:16.151Z",
+  "updatedAt": "2026-10-29T19:23:16.152Z"
+};
+
+  const TCC_COLUMNS = [
+  {
+    "id": "col-tcc-backlog",
+    "boardId": "board-tcc-inmoov",
+    "title": "Backlog",
+    "color": "#64748b",
+    "order": 0,
+    "createdAt": "2026-10-29T19:23:16.152Z",
+    "subtitle": "Demandas pendentes"
+  },
+  {
+    "id": "col-tcc-todo",
+    "boardId": "board-tcc-inmoov",
+    "title": "A Fazer / To Do",
+    "color": "#3b82f6",
+    "order": 1,
+    "createdAt": "2026-10-29T19:23:16.152Z",
+    "subtitle": "Planejado para execução imediata"
+  },
+  {
+    "id": "col-tcc-inprogress",
+    "boardId": "board-tcc-inmoov",
+    "title": "Em Andamento / In Progress",
+    "color": "#f59e0b",
+    "order": 2,
+    "createdAt": "2026-10-29T19:23:16.152Z",
+    "subtitle": "Tarefas em desenvolvimento"
+  },
+  {
+    "id": "col-tcc-review",
+    "boardId": "board-tcc-inmoov",
+    "title": "Revisão / Homologação",
+    "color": "#a855f7",
+    "order": 3,
+    "createdAt": "2026-10-29T19:23:16.152Z",
+    "subtitle": "Testes, validação e QA"
+  },
+  {
+    "id": "col-tcc-done",
+    "boardId": "board-tcc-inmoov",
+    "title": "Concluído / Done",
+    "color": "#10b981",
+    "order": 4,
+    "createdAt": "2026-10-29T19:23:16.152Z",
+    "subtitle": "Entregas finalizadas"
+  }
+];
+
+  const TCC_CARDS = [
+  {
+    "id": "card-tcc-a1",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Validar a captura da webcam via OpenCV",
+    "description": "Verificar a inicialização de cv2.VideoCapture(), estabilidade do loop de streaming e liberação de recursos ao encerrar a execução.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-visao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-a1-1",
+        "text": "Validar instanciação de cv2.VideoCapture(index)",
+        "completed": true
+      },
+      {
+        "id": "chk-a1-2",
+        "text": "Verificar captura contínua de frames sem travamentos",
+        "completed": true
+      },
+      {
+        "id": "chk-a1-3",
+        "text": "Garantir fechamento correto com cap.release()",
+        "completed": true
+      }
+    ],
+    "notes": "Dependência base para todo o pipeline de visão computacional.",
+    "links": [],
+    "isArchived": false,
+    "order": 0,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-a2",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Configurar a resolução de operação de 640 × 480",
+    "description": "Validar definição explícita das propriedades cv2.CAP_PROP_FRAME_WIDTH e cv2.CAP_PROP_FRAME_HEIGHT para 640x480 no OpenCV.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-visao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-a2-1",
+        "text": "Definir CAP_PROP_FRAME_WIDTH = 640",
+        "completed": true
+      },
+      {
+        "id": "chk-a2-2",
+        "text": "Definir CAP_PROP_FRAME_HEIGHT = 480",
+        "completed": true
+      },
+      {
+        "id": "chk-a2-3",
+        "text": "Validar shape da matriz retornado (480, 640, 3)",
+        "completed": true
+      }
+    ],
+    "notes": "Resolução padrão calibrada para equilíbrio entre taxa de amostragem e latência.",
+    "links": [],
+    "isArchived": false,
+    "order": 1,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-a3",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Validar a captura pelo dispositivo correto (Device Index)",
+    "description": "Testar seleção de dispositivo de câmera (index 0, 1, etc.) em ambientes com múltiplas câmeras (câmera integrada e externa USB).",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-visao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-a3-1",
+        "text": "Testar com index padrão 0",
+        "completed": true
+      },
+      {
+        "id": "chk-a3-2",
+        "text": "Validar fallback/seleção dinâmica para câmeras externas",
+        "completed": true
+      },
+      {
+        "id": "chk-a3-3",
+        "text": "Verificar tratamento de erro caso o dispositivo esteja indisponível",
+        "completed": true
+      }
+    ],
+    "notes": "Evita falhas silenciosas de captura em ambientes com múltiplas fontes de vídeo.",
+    "links": [],
+    "isArchived": false,
+    "order": 2,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-a4",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Implementar e verificar o espelhamento horizontal",
+    "description": "Aplicar cv2.flip(frame, 1) para comportamento de espelho natural na interface do usuário e teleoperação.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-visao",
+      "lbl-interface"
+    ],
+    "checklists": [
+      {
+        "id": "chk-a4-1",
+        "text": "Aplicar cv2.flip(frame, 1) no fluxo de captura",
+        "completed": true
+      },
+      {
+        "id": "chk-a4-2",
+        "text": "Conferir alinhamento do movimento do operador com a imagem exibida",
+        "completed": true
+      },
+      {
+        "id": "chk-a4-3",
+        "text": "Validar impacto na lateralidade detectada",
+        "completed": true
+      }
+    ],
+    "notes": "Atenção: o espelhamento afeta os rótulos de lateralidade (handedness) do MediaPipe.",
+    "links": [],
+    "isArchived": false,
+    "order": 3,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-a5",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Validar a correção da lateralidade em get_handedness_label()",
+    "description": "Verificar a função get_handedness_label() para garantir que a inversão causada pelo cv2.flip() seja devidamente corrigida (Left <-> Right).",
+    "priority": "urgent",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-visao",
+      "lbl-mediapipe",
+      "lbl-correcoes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-a5-1",
+        "text": "Inspecionar lógica de get_handedness_label()",
+        "completed": true
+      },
+      {
+        "id": "chk-a5-2",
+        "text": "Testar mão direita real detectada como Right",
+        "completed": true
+      },
+      {
+        "id": "chk-a5-3",
+        "text": "Testar mão esquerda real detectada como Left",
+        "completed": true
+      }
+    ],
+    "notes": "Crucial para a teleoperação bimanual e para a quiralidade correta na simulação.",
+    "links": [],
+    "isArchived": false,
+    "order": 4,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-a6",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Validar a conversão de BGR para RGB",
+    "description": "Garantir conversão explícita com cv2.cvtColor(frame, cv2.COLOR_BGR2RGB) antes de alimentar o MediaPipe.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-visao",
+      "lbl-mediapipe"
+    ],
+    "checklists": [
+      {
+        "id": "chk-a6-1",
+        "text": "Verificar chamada cv2.cvtColor(..., cv2.COLOR_BGR2RGB)",
+        "completed": true
+      },
+      {
+        "id": "chk-a6-2",
+        "text": "Confirmar ordem dos canais para inferência correta",
+        "completed": true
+      }
+    ],
+    "notes": "O MediaPipe espera entrada RGB estrita; canais BGR degradam a detecção de tons de pele.",
+    "links": [],
+    "isArchived": false,
+    "order": 5,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-a7",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Verificar a criação de mp.Image no formato SRGB",
+    "description": "Instanciar mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame) para a Tasks Vision API do MediaPipe.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-mediapipe"
+    ],
+    "checklists": [
+      {
+        "id": "chk-a7-1",
+        "text": "Confirmar uso de mp.ImageFormat.SRGB",
+        "completed": true
+      },
+      {
+        "id": "chk-a7-2",
+        "text": "Verificar passagem contígua do array numpy",
+        "completed": true
+      }
+    ],
+    "notes": "Requisito da Tasks API moderna do MediaPipe.",
+    "links": [],
+    "isArchived": false,
+    "order": 6,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-a8",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Validar a inferência temporal com HandLandmarker.detect_for_video",
+    "description": "Executar detector.detect_for_video(mp_image, timestamp_ms) no modo de vídeo com timestamps monotonicamente crescentes.",
+    "priority": "urgent",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-mediapipe",
+      "lbl-visao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-a8-1",
+        "text": "Configurar RunningMode.VIDEO",
+        "completed": true
+      },
+      {
+        "id": "chk-a8-2",
+        "text": "Garantir timestamps estritamente crescentes em ms",
+        "completed": true
+      },
+      {
+        "id": "chk-a8-3",
+        "text": "Validar tratamento de exceções em frames com timestamps repetidos",
+        "completed": true
+      }
+    ],
+    "notes": "O modo VIDEO usa tracking temporal entre frames para suavização e menor latência.",
+    "links": [],
+    "isArchived": false,
+    "order": 7,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-a9",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Verificar a geração dos 21 landmarks por mão",
+    "description": "Inspecionar a estrutura hand_landmarks (21 pontos tridimensionais x, y, z normalizados) e world_landmarks.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-mediapipe",
+      "lbl-matematica"
+    ],
+    "checklists": [
+      {
+        "id": "chk-a9-1",
+        "text": "Verificar contagem de 21 pontos por mão detectada",
+        "completed": true
+      },
+      {
+        "id": "chk-a9-2",
+        "text": "Validar coordenadas (x, y) normalizadas [0, 1] e profundidade relativa z",
+        "completed": true
+      },
+      {
+        "id": "chk-a9-3",
+        "text": "Checar world_landmarks em coordenadas métricas",
+        "completed": true
+      }
+    ],
+    "notes": "Base geométrica de toda a cinemática e cálculo angular.",
+    "links": [],
+    "isArchived": false,
+    "order": 8,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-a10",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Validar o cálculo dos timestamps em milissegundos",
+    "description": "Calcular timestamp_ms = int(time.time() * 1000) ou time.monotonic_ns() // 1_000_000 para sincronismo do detector.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-mediapipe",
+      "lbl-backend"
+    ],
+    "checklists": [
+      {
+        "id": "chk-a10-1",
+        "text": "Implementar relógio monotônico para timestamps",
+        "completed": true
+      },
+      {
+        "id": "chk-a10-2",
+        "text": "Validar que timestamp nunca decresce",
+        "completed": true
+      }
+    ],
+    "notes": "Previne falhas de assert no pipeline do MediaPipe.",
+    "links": [],
+    "isArchived": false,
+    "order": 9,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-a11",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Verificar a renderização dos landmarks e conexões",
+    "description": "Desenhar esqueleto da mão (21 pontos e conexões) no frame para retorno visual e depuração.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-visao",
+      "lbl-interface"
+    ],
+    "checklists": [
+      {
+        "id": "chk-a11-1",
+        "text": "Desenhar conexões esqueléticas entre landmarks",
+        "completed": true
+      },
+      {
+        "id": "chk-a11-2",
+        "text": "Desenhar nós com cores distintas por lateralidade (Right/Left)",
+        "completed": true
+      },
+      {
+        "id": "chk-a11-3",
+        "text": "Garantir rendering sem impactar o FPS global",
+        "completed": true
+      }
+    ],
+    "notes": "Exibido no overlay de vídeo e diagnóstico.",
+    "links": [],
+    "isArchived": false,
+    "order": 10,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-a12",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Validar a telemetria de FPS, latência e sequência",
+    "description": "Calcular FPS instantâneo, latência de inferência (ms) e contador sequencial de frames processados.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-visao",
+      "lbl-backend"
+    ],
+    "checklists": [
+      {
+        "id": "chk-a12-1",
+        "text": "Calcular FPS com média móvel exponencial",
+        "completed": true
+      },
+      {
+        "id": "chk-a12-2",
+        "text": "Medir tempo de inferência do MediaPipe isolado",
+        "completed": true
+      },
+      {
+        "id": "chk-a12-3",
+        "text": "Incluir métricas no payload de telemetria",
+        "completed": true
+      }
+    ],
+    "notes": "Métricas indispensáveis para a banca e análise de desempenho.",
+    "links": [],
+    "isArchived": false,
+    "order": 11,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-a13",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Verificar a codificação JPEG e a transmissão MJPEG pelo endpoint /video_feed",
+    "description": "Validar compressão cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 80]) e streaming multipart/x-mixed-replace em /video_feed.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-visao",
+      "lbl-backend"
+    ],
+    "checklists": [
+      {
+        "id": "chk-a13-1",
+        "text": "Configurar qualidade de compressão JPEG equilibrada (75-85%)",
+        "completed": true
+      },
+      {
+        "id": "chk-a13-2",
+        "text": "Implementar gerador multipart/x-mixed-replace",
+        "completed": true
+      },
+      {
+        "id": "chk-a13-3",
+        "text": "Testar consumo simultâneo no navegador",
+        "completed": true
+      }
+    ],
+    "notes": "Permite streaming de vídeo com overlay em tempo real para a interface web.",
+    "links": [],
+    "isArchived": false,
+    "order": 12,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-b1",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Revisar a construção dos vetores longitudinais e transversais",
+    "description": "Verificar os vetores u_long (do pulso Landmark 0 ao MCP Landmark 9) e u_trans (do MCP Index Landmark 5 ao MCP Pinky Landmark 17).",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-matematica",
+      "lbl-visao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-b1-1",
+        "text": "Verificar vetor longitudinal u_long = P9 - P0",
+        "completed": true
+      },
+      {
+        "id": "chk-b1-2",
+        "text": "Verificar vetor transversal u_trans = P17 - P5",
+        "completed": true
+      },
+      {
+        "id": "chk-b1-3",
+        "text": "Validar normalização vetorial ||u|| = 1",
+        "completed": true
+      }
+    ],
+    "notes": "Base do referencial local da mão.",
+    "links": [],
+    "isArchived": false,
+    "order": 13,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-b2",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Validar a normal da palma e o fator de quiralidade (shand)",
+    "description": "Equação: n_palm = shand · (u_long × u_trans), com shand = -1 para mão esquerda e shand = +1 para mão direita conforme convenção adotada.",
+    "priority": "urgent",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-matematica",
+      "lbl-correcoes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-b2-1",
+        "text": "Conferir definição shand = +1 para Right e shand = -1 para Left",
+        "completed": true
+      },
+      {
+        "id": "chk-b2-2",
+        "text": "Validar produto vetorial u_long x u_trans",
+        "completed": true
+      },
+      {
+        "id": "chk-b2-3",
+        "text": "Verificar norma ||n_palm|| = 1 (tolerância 10⁻⁵)",
+        "completed": true
+      }
+    ],
+    "notes": "Fórmula fundamental: n_palm = shand · (u_long × u_trans)",
+    "links": [],
+    "isArchived": false,
+    "order": 14,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-b3",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Verificar a classificação de palma e dorso nas duas mãos",
+    "description": "Analisar o componente Z da normal da palma n_palm.z: se n_palm.z < 0 -> PALMA voltada para a câmera; se n_palm.z > 0 -> DORSO.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-matematica",
+      "lbl-interface"
+    ],
+    "checklists": [
+      {
+        "id": "chk-b3-1",
+        "text": "Validar limiar de classificação com histerese",
+        "completed": true
+      },
+      {
+        "id": "chk-b3-2",
+        "text": "Testar mão direita: palma vs dorso",
+        "completed": true
+      },
+      {
+        "id": "chk-b3-3",
+        "text": "Testar mão esquerda: palma vs dorso",
+        "completed": true
+      }
+    ],
+    "notes": "Evita oscilações de classificação em ângulos tangenciais.",
+    "links": [],
+    "isArchived": false,
+    "order": 15,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-b4",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Validar a correção dos rótulos após o espelhamento da câmera",
+    "description": "Conferir se a cadeia [Captura -> Flip -> MediaPipe -> Inversão de Label -> Orientação] produz classificação consistente.",
+    "priority": "urgent",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-visao",
+      "lbl-matematica",
+      "lbl-correcoes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-b4-1",
+        "text": "Rastrear propagação de labels da captura até a saída 3D",
+        "completed": true
+      },
+      {
+        "id": "chk-b4-2",
+        "text": "Garantir que a quiralidade matemática não foi invertida duplamente",
+        "completed": true
+      }
+    ],
+    "notes": "Resolve o problema histórico de inversão entre palma/dorso nas duas mãos.",
+    "links": [],
+    "isArchived": false,
+    "order": 16,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-b5",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Verificar a construção da matriz de rotação SO(3)",
+    "description": "Construir a base ortonormal R = [u_x, u_y, u_z] e validar ortogonalidade R^T · R = I e determinante det(R) = +1 (tolerância 10⁻⁴).",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-matematica",
+      "lbl-simulacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-b5-1",
+        "text": "Gram-Schmidt ou produtos cruzados para ortogonalização completa",
+        "completed": true
+      },
+      {
+        "id": "chk-b5-2",
+        "text": "Verificar det(R) == 1.0 +/- 1e-4",
+        "completed": true
+      },
+      {
+        "id": "chk-b5-3",
+        "text": "Checar R^T * R == I",
+        "completed": true
+      }
+    ],
+    "notes": "Garante rotações puras sem distorções de escala ou reflexão.",
+    "links": [],
+    "isArchived": false,
+    "order": 17,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-b6",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Validar a extração e interpolação de quatérnions",
+    "description": "Converter matriz SO(3) para quatérnion normalizado q = (w, x, y, z) e validar SLERP para transições suaves entre frames.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-matematica",
+      "lbl-simulacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-b6-1",
+        "text": "Validar conversão SO(3) -> Quatérnion",
+        "completed": true
+      },
+      {
+        "id": "chk-b6-2",
+        "text": "Garantir normal ||q|| = 1",
+        "completed": true
+      },
+      {
+        "id": "chk-b6-3",
+        "text": "Checar interpolação suave sem gimbal lock",
+        "completed": true
+      }
+    ],
+    "notes": "Evita descontinuidades de representação por ângulos de Euler.",
+    "links": [],
+    "isArchived": false,
+    "order": 18,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-b7",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-review",
+    "title": "Testar a continuidade da orientação em rotações de 360°",
+    "description": "Executar giro contínuo do punho em 360° e verificar ausência de saltos bruscos (flips) na orientação calculada.",
+    "priority": "high",
+    "dueDate": "2026-10-31",
+    "labels": [
+      "lbl-matematica",
+      "lbl-testes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-b7-1",
+        "text": "Executar rotação de pitch contínua",
+        "completed": true
+      },
+      {
+        "id": "chk-b7-2",
+        "text": "Executar rotação de roll contínua",
+        "completed": false
+      },
+      {
+        "id": "chk-b7-3",
+        "text": "Executar rotação de yaw contínua",
+        "completed": false
+      },
+      {
+        "id": "chk-b7-4",
+        "text": "Verificar continuidade geodésica",
+        "completed": false
+      }
+    ],
+    "notes": "Coberto pelo script tests/test_orientation.py.",
+    "links": [],
+    "isArchived": false,
+    "order": 0,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-b8",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-inprogress",
+    "title": "Verificar o comportamento da classificação em posições intermediárias e casos ambíguos",
+    "description": "Testar mão de perfil (perpendicular à câmera, n_palm.z ≈ 0) e mãos ocluídas parcialmente.",
+    "priority": "medium",
+    "dueDate": "2026-11-02",
+    "labels": [
+      "lbl-matematica",
+      "lbl-visao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-b8-1",
+        "text": "Testar estabilidade do sinal em n_palm.z próximo a 0",
+        "completed": true
+      },
+      {
+        "id": "chk-b8-2",
+        "text": "Validar amortecimento/filtro passa-baixas para evitar flicker",
+        "completed": false
+      }
+    ],
+    "notes": "Essencial para robustez da interface de diagnóstico.",
+    "links": [],
+    "isArchived": false,
+    "order": 0,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-c1",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Revisar o cálculo dos ângulos PIP e DIP",
+    "description": "Calcular o ângulo entre os vetores das falanges proximal, intermediária e distal usando produto escalar e arco-cosseno.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-matematica"
+    ],
+    "checklists": [
+      {
+        "id": "chk-c1-1",
+        "text": "Calcular ângulo PIP entre MCP-PIP e PIP-DIP",
+        "completed": true
+      },
+      {
+        "id": "chk-c1-2",
+        "text": "Calcular ângulo DIP entre PIP-DIP e DIP-TIP",
+        "completed": true
+      },
+      {
+        "id": "chk-c1-3",
+        "text": "Garantir clamp no domínio de acos [-1.0, 1.0]",
+        "completed": true
+      }
+    ],
+    "notes": "Proteção contra erros de arredondamento de ponto flutuante no acos.",
+    "links": [],
+    "isArchived": false,
+    "order": 19,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-c2",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Validar a métrica TOTAL = (PIP + DIP) / 2",
+    "description": "Verificar a fórmula documentada TOTAL = (PIP + DIP) / 2 para representação consolidada da flexão do dedo no modelo simplificado.",
+    "priority": "urgent",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-matematica",
+      "lbl-correcoes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-c2-1",
+        "text": "Verificar implementação da média aritmética",
+        "completed": true
+      },
+      {
+        "id": "chk-c2-2",
+        "text": "Conferir se não há soma pura sem divisão",
+        "completed": true
+      },
+      {
+        "id": "chk-c2-3",
+        "text": "Validar faixa esperada [0°, 90°]",
+        "completed": true
+      }
+    ],
+    "notes": "Corrige o problema histórico de cálculo do ângulo total que duplicava a flexão.",
+    "links": [],
+    "isArchived": false,
+    "order": 20,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-c3",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Verificar os valores de extensão e flexão dos dedos",
+    "description": "Mapear limites anatômicos: dedo estendido (≈ 0° a 15°) e dedo totalmente flexionado (≈ 75° a 90°).",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-matematica",
+      "lbl-simulacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-c3-1",
+        "text": "Registrar valor medido em extensão completa",
+        "completed": true
+      },
+      {
+        "id": "chk-c3-2",
+        "text": "Registrar valor medido em flexão completa (punho cerrado)",
+        "completed": true
+      },
+      {
+        "id": "chk-c3-3",
+        "text": "Validar normalização para faixa [0.0, 1.0] se aplicável",
+        "completed": true
+      }
+    ],
+    "notes": "Registrar valores de referência documentados no TCC.",
+    "links": [],
+    "isArchived": false,
+    "order": 21,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-c4",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Testar movimentos individuais de cada dedo",
+    "description": "Validar isolamento cinemático ao mover indicador, médio, anelar e mínimo separadamente.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-matematica",
+      "lbl-testes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-c4-1",
+        "text": "Flexionar indicador isolado e checar outros dedos estendidos",
+        "completed": true
+      },
+      {
+        "id": "chk-c4-2",
+        "text": "Flexionar médio isolado",
+        "completed": true
+      },
+      {
+        "id": "chk-c4-3",
+        "text": "Flexionar anelar isolado",
+        "completed": true
+      },
+      {
+        "id": "chk-c4-4",
+        "text": "Flexionar mínimo isolado",
+        "completed": true
+      }
+    ],
+    "notes": "Validado no script tests/test_orientation.py (test_individual_finger_movements).",
+    "links": [],
+    "isArchived": false,
+    "order": 22,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-c5",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Validar a independência cinemática entre os dedos",
+    "description": "Garantir que a flexão de um dedo não cause interferência cruzada (crosstalk) espúria nos ângulos dos dedos vizinhos.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-matematica"
+    ],
+    "checklists": [
+      {
+        "id": "chk-c5-1",
+        "text": "Medir variação angular nos dedos adjacentes durante flexão única",
+        "completed": true
+      },
+      {
+        "id": "chk-c5-2",
+        "text": "Confirmar isolamento matemático dos vetores de cada dedo",
+        "completed": true
+      }
+    ],
+    "notes": "Crucial para a teleoperação precisa de próteses robóticas.",
+    "links": [],
+    "isArchived": false,
+    "order": 23,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-c6",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-review",
+    "title": "Verificar o comportamento do polegar (Thumb CMC, MCP, IP)",
+    "description": "Analisar cinemática 3D do polegar (abdução/adução e oposição), que possui eixos articulares não coplanares aos demais dedos.",
+    "priority": "high",
+    "dueDate": "2026-10-31",
+    "labels": [
+      "lbl-matematica",
+      "lbl-simulacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-c6-1",
+        "text": "Calcular ângulo IP do polegar (Landmarks 2-3-4)",
+        "completed": true
+      },
+      {
+        "id": "chk-c6-2",
+        "text": "Calcular ângulo MCP do polegar (Landmarks 1-2-3)",
+        "completed": false
+      },
+      {
+        "id": "chk-c6-3",
+        "text": "Verificar cálculo de oposição em relação à palma",
+        "completed": false
+      }
+    ],
+    "notes": "O polegar possui 3 graus de liberdade anatômicos principais.",
+    "links": [],
+    "isArchived": false,
+    "order": 1,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-c7",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-inprogress",
+    "title": "Validar os valores enviados à simulação 3D",
+    "description": "Conferir o mapeamento de radianos/graus e limites de clamp antes do envio pelo WebSocket/SSE ou payload JSON.",
+    "priority": "high",
+    "dueDate": "2026-11-02",
+    "labels": [
+      "lbl-matematica",
+      "lbl-simulacao",
+      "lbl-backend"
+    ],
+    "checklists": [
+      {
+        "id": "chk-c7-1",
+        "text": "Verificar unidade angular (graus vs radianos)",
+        "completed": true
+      },
+      {
+        "id": "chk-c7-2",
+        "text": "Conferir limites mínimos e máximos permitidos no Three.js",
+        "completed": false
+      }
+    ],
+    "notes": "Evita distorções de geometria e rotações não-físicas no Three.js.",
+    "links": [],
+    "isArchived": false,
+    "order": 1,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-c8",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-todo",
+    "title": "Conferir correspondência entre ângulos calculados e exibidos no diagnóstico",
+    "description": "Garantir que os números plotados nos cards de diagnóstico na UI sejam exatamente iguais aos do payload enviado ao backend.",
+    "priority": "medium",
+    "dueDate": "2026-11-10",
+    "labels": [
+      "lbl-interface",
+      "lbl-matematica"
+    ],
+    "checklists": [
+      {
+        "id": "chk-c8-1",
+        "text": "Comparar telemetria do backend com texto na tela de diagnóstico",
+        "completed": false
+      },
+      {
+        "id": "chk-c8-2",
+        "text": "Confirmar formatação decimal (1 casa decimal)",
+        "completed": false
+      }
+    ],
+    "notes": "Transparência total para demonstração durante a banca de TCC.",
+    "links": [],
+    "isArchived": false,
+    "order": 0,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-d1",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Revisar a hierarquia de objetos da mão InMoov",
+    "description": "Verificar o grafo de cena Three.js: HandRoot -> Wrist -> Palm -> Metacarpals -> Proximal -> Intermediate -> Distal Phalanxes.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-simulacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d1-1",
+        "text": "Inspecionar Scene Graph no Three.js",
+        "completed": true
+      },
+      {
+        "id": "chk-d1-2",
+        "text": "Validar herança de transformações (posições e rotações globais)",
+        "completed": true
+      }
+    ],
+    "notes": "A correta herança de transforms garante que mover o punho move toda a mão.",
+    "links": [],
+    "isArchived": false,
+    "order": 24,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-d2",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Validar a construção da mão em buildSingleHand",
+    "description": "Inspecionar a função buildSingleHand(side, options) para montagem paramétrica da geometria 3D da mão direita e esquerda.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-simulacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d2-1",
+        "text": "Testar buildSingleHand('Right')",
+        "completed": true
+      },
+      {
+        "id": "chk-d2-2",
+        "text": "Testar buildSingleHand('Left')",
+        "completed": true
+      },
+      {
+        "id": "chk-d2-3",
+        "text": "Confirmar materiais, sombras e meshes associadas",
+        "completed": true
+      }
+    ],
+    "notes": "Permite instanciar ambas as mãos de forma independente.",
+    "links": [],
+    "isArchived": false,
+    "order": 25,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-d3",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Verificar as proporções anatômicas e a separação entre os dedos",
+    "description": "Validar comprimentos das falanges e espaçamento lateral dos dedos para evitar aspecto artificial ou sobreposição.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-simulacao",
+      "lbl-correcoes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d3-1",
+        "text": "Conferir escalas dos dedos (Polegar, Indicador, Médio, Anelar, Mínimo)",
+        "completed": true
+      },
+      {
+        "id": "chk-d3-2",
+        "text": "Ajustar offsets de montagem na base da palma",
+        "completed": true
+      }
+    ],
+    "notes": "Relacionado à correção de colisão entre os dedos 3D.",
+    "links": [],
+    "isArchived": false,
+    "order": 26,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-d4",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Validar as rotações de base em leque (Finger Fan Splay)",
+    "description": "Verificar angulação inicial de repouso dos dedos na palma (leque natural de repouso das mãos humanas).",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-simulacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d4-1",
+        "text": "Conferir offsets angulares no eixo Z para cada dedo",
+        "completed": true
+      },
+      {
+        "id": "chk-d4-2",
+        "text": "Garantir simetria espelhada entre mão direita e esquerda",
+        "completed": true
+      }
+    ],
+    "notes": "Abertura anatômica natural do modelo InMoov.",
+    "links": [],
+    "isArchived": false,
+    "order": 27,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-d5",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Revisar o cálculo do splay dinâmico (abertura lateral)",
+    "description": "Fórmula documentada: θz = -(v_ray · v_XBasis) · K para rotação de abdução/adução dinâmica de acordo com a abertura da mão.",
+    "priority": "urgent",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-simulacao",
+      "lbl-matematica",
+      "lbl-correcoes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d5-1",
+        "text": "Verificar produto escalar -(v_ray · v_XBasis)",
+        "completed": true
+      },
+      {
+        "id": "chk-d5-2",
+        "text": "Validar ganho de sensibilidade K",
+        "completed": true
+      },
+      {
+        "id": "chk-d5-3",
+        "text": "Conferir se dedos abrem ao abrir a mão e fecham ao fechar",
+        "completed": true
+      }
+    ],
+    "notes": "Fórmula de referência: θz = -(v_ray · v_XBasis) · K",
+    "links": [],
+    "isArchived": false,
+    "order": 28,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-d6",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Corrigir ou validar o sentido das rotações de abdução e adução",
+    "description": "Conferir histórico da inversão de sinal no eixo Z dos dedos, assegurando que o sinal negativo corrigiu a abertura lateral invertida.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-simulacao",
+      "lbl-correcoes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d6-1",
+        "text": "Testar abertura lateral na mão direita",
+        "completed": true
+      },
+      {
+        "id": "chk-d6-2",
+        "text": "Testar abertura lateral na mão esquerda",
+        "completed": true
+      },
+      {
+        "id": "chk-d6-3",
+        "text": "Verificar ausência de cruzamento inverso dos dedos",
+        "completed": true
+      }
+    ],
+    "notes": "Histórico documentado: o sinal negativo foi adicionado para inverter o sentido incorreto anterior.",
+    "links": [],
+    "isArchived": false,
+    "order": 29,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-d7",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-review",
+    "title": "Testar a correspondência entre os movimentos reais e virtuais",
+    "description": "Validar fidelidade do espelhamento de movimento do operador real para a mão 3D renderizada em tempo real.",
+    "priority": "high",
+    "dueDate": "2026-10-31",
+    "labels": [
+      "lbl-simulacao",
+      "lbl-testes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d7-1",
+        "text": "Testar gestos básicos: mão aberta, mão fechada, paz e amor, contagem 1-5",
+        "completed": true
+      },
+      {
+        "id": "chk-d7-2",
+        "text": "Verificar ausência de lag perceptível (> 60 FPS no Three.js)",
+        "completed": false
+      }
+    ],
+    "notes": "Demonstração principal da banca de TCC.",
+    "links": [],
+    "isArchived": false,
+    "order": 2,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-d8",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-inprogress",
+    "title": "Verificar colisões e sobreposição entre os dedos",
+    "description": "Confirmar que os dedos adjacentes não atravessam a malha poligonal uns dos outros durante a flexão completa.",
+    "priority": "medium",
+    "dueDate": "2026-11-02",
+    "labels": [
+      "lbl-simulacao",
+      "lbl-correcoes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d8-1",
+        "text": "Inspecionar fechamento de punho em vista lateral",
+        "completed": true
+      },
+      {
+        "id": "chk-d8-2",
+        "text": "Inspecionar fechamento de punho em vista superior",
+        "completed": false
+      }
+    ],
+    "notes": "Garante realismo visual da simulação 3D.",
+    "links": [],
+    "isArchived": false,
+    "order": 2,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-d9",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-todo",
+    "title": "Validar a orientação de palma e dorso no modelo 3D",
+    "description": "Garantir que a mão virtual gire e apresente a palma e o dorso conforme o punho do operador é rotacionado.",
+    "priority": "high",
+    "dueDate": "2026-11-10",
+    "labels": [
+      "lbl-simulacao",
+      "lbl-matematica"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d9-1",
+        "text": "Aplicar quatérnion global ao Wrist/HandRoot",
+        "completed": false
+      },
+      {
+        "id": "chk-d9-2",
+        "text": "Conferir sincronismo de rotação 3D com a imagem da câmera",
+        "completed": false
+      }
+    ],
+    "notes": "Acoplamento da cinemática SO(3) na cena Three.js.",
+    "links": [],
+    "isArchived": false,
+    "order": 1,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-d10",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-todo",
+    "title": "Testar as duas mãos de forma independente na cena 3D",
+    "description": "Renderizar mão direita e mão esquerda simultaneamente sem conflito de matrizes de transformação.",
+    "priority": "high",
+    "dueDate": "2026-11-10",
+    "labels": [
+      "lbl-simulacao",
+      "lbl-testes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d10-1",
+        "text": "Posicionar mão esquerda no lado esquerdo da tela",
+        "completed": false
+      },
+      {
+        "id": "chk-d10-2",
+        "text": "Posicionar mão direita no lado direito da tela",
+        "completed": false
+      },
+      {
+        "id": "chk-d10-3",
+        "text": "Validar animação independente com 2 mãos no frame",
+        "completed": false
+      }
+    ],
+    "notes": "Suporte bimanual completo.",
+    "links": [],
+    "isArchived": false,
+    "order": 2,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-e1",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Validar o endpoint /api/hand",
+    "description": "Verificar resposta HTTP JSON em /api/hand contendo os dados instantâneos de telemetria, ângulos e orientação.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-backend"
+    ],
+    "checklists": [
+      {
+        "id": "chk-e1-1",
+        "text": "Fazer GET /api/hand e validar status 200 OK",
+        "completed": true
+      },
+      {
+        "id": "chk-e1-2",
+        "text": "Validar Content-Type: application/json",
+        "completed": true
+      }
+    ],
+    "notes": "Endpoint REST síncrono para polling ou consultas pontuais.",
+    "links": [],
+    "isArchived": false,
+    "order": 30,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-e2",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Verificar o payload bimanual com as chaves Left e Right",
+    "description": "Garantir formato estruturado: payload[\"Left\"] e payload[\"Right\"], cada um contendo angles, orientation, landmarks, is_detected.",
+    "priority": "urgent",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-backend"
+    ],
+    "checklists": [
+      {
+        "id": "chk-e2-1",
+        "text": "Verificar presença de chave \"Left\"",
+        "completed": true
+      },
+      {
+        "id": "chk-e2-2",
+        "text": "Verificar presença de chave \"Right\"",
+        "completed": true
+      },
+      {
+        "id": "chk-e2-3",
+        "text": "Validar campos internos de cada mão",
+        "completed": true
+      }
+    ],
+    "notes": "Estrutura JSON bimanual padronizada do projeto.",
+    "links": [],
+    "isArchived": false,
+    "order": 31,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-e3",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Validar a independência do estado de cada mão",
+    "description": "Confirmar que se apenas uma mão estiver no campo de visão, a outra é marcada como is_detected = False sem corromper a detectada.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-backend",
+      "lbl-testes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-e3-1",
+        "text": "Testar apenas mão direita visível",
+        "completed": true
+      },
+      {
+        "id": "chk-e3-2",
+        "text": "Testar apenas mão esquerda visível",
+        "completed": true
+      },
+      {
+        "id": "chk-e3-3",
+        "text": "Testar nenhuma mão visível",
+        "completed": true
+      },
+      {
+        "id": "chk-e3-4",
+        "text": "Testar ambas visíveis simultaneamente",
+        "completed": true
+      }
+    ],
+    "notes": "Validado no script tests/test_stream.py.",
+    "links": [],
+    "isArchived": false,
+    "order": 32,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-e4",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Testar a retrocompatibilidade dos campos legados",
+    "description": "Verificar se campos legados na raiz do JSON continuam presentes para não quebrar clientes antigos.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-backend"
+    ],
+    "checklists": [
+      {
+        "id": "chk-e4-1",
+        "text": "Conferir campos de compatibilidade legado",
+        "completed": true
+      },
+      {
+        "id": "chk-e4-2",
+        "text": "Executar testes de regressão de schema",
+        "completed": true
+      }
+    ],
+    "notes": "Garante que ferramentas de teste legadas continuem operacionais.",
+    "links": [],
+    "isArchived": false,
+    "order": 33,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-e5",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Validar o endpoint /stream/hand (Server-Sent Events — SSE)",
+    "description": "Validar streaming contínuo de eventos com Content-Type: text/event-stream e formato \"data: {...}\\n\\n\".",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-backend"
+    ],
+    "checklists": [
+      {
+        "id": "chk-e5-1",
+        "text": "Verificar cabeçalho Cache-Control: no-cache",
+        "completed": true
+      },
+      {
+        "id": "chk-e5-2",
+        "text": "Verificar cabeçalho Content-Type: text/event-stream",
+        "completed": true
+      },
+      {
+        "id": "chk-e5-3",
+        "text": "Validar reconexão automática no EventSource do frontend",
+        "completed": true
+      }
+    ],
+    "notes": "Canal principal de baixa latência para alimentar a simulação 3D no navegador.",
+    "links": [],
+    "isArchived": false,
+    "order": 34,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-e6",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-review",
+    "title": "Verificar a sequência incremental dos eventos SSE",
+    "description": "Checar campo \"sequence\" incremental e timestamps no payload SSE para detecção de pacotes perdidos ou fora de ordem.",
+    "priority": "medium",
+    "dueDate": "2026-10-31",
+    "labels": [
+      "lbl-backend",
+      "lbl-testes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-e6-1",
+        "text": "Validar incremento estrito seq_n = seq_{n-1} + 1",
+        "completed": true
+      },
+      {
+        "id": "chk-e6-2",
+        "text": "Monitorar taxa de perda de pacotes",
+        "completed": false
+      }
+    ],
+    "notes": "Coberto pelo script tests/test_stream.py.",
+    "links": [],
+    "isArchived": false,
+    "order": 3,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-e7",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-inprogress",
+    "title": "Validar as rotas /, /debug e /debug/landmarks",
+    "description": "Inspecionar disponibilidade e respostas das rotas Web UI: página principal (/), dashboard de depuração (/debug) e visualizador de landmarks (/debug/landmarks).",
+    "priority": "high",
+    "dueDate": "2026-11-02",
+    "labels": [
+      "lbl-backend",
+      "lbl-interface"
+    ],
+    "checklists": [
+      {
+        "id": "chk-e7-1",
+        "text": "Testar GET / -> 200 OK",
+        "completed": true
+      },
+      {
+        "id": "chk-e7-2",
+        "text": "Testar GET /debug -> 200 OK",
+        "completed": false
+      },
+      {
+        "id": "chk-e7-3",
+        "text": "Testar GET /debug/landmarks -> 200 OK",
+        "completed": false
+      }
+    ],
+    "notes": "Validado no script smoke_debug.py.",
+    "links": [],
+    "isArchived": false,
+    "order": 3,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-e8",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-todo",
+    "title": "Verificar o formato dos dados retornados em todas as rotas",
+    "description": "Garantir consistência de tipos (floats para ângulos, strings para handedness/orientação, booleans para is_detected).",
+    "priority": "medium",
+    "dueDate": "2026-11-10",
+    "labels": [
+      "lbl-backend"
+    ],
+    "checklists": [
+      {
+        "id": "chk-e8-1",
+        "text": "Validar schema JSON das respostas",
+        "completed": false
+      },
+      {
+        "id": "chk-e8-2",
+        "text": "Checar ausência de valores NaN ou null nos cálculos matemáticos",
+        "completed": false
+      }
+    ],
+    "notes": "Previne falhas de renderização no cliente Three.js.",
+    "links": [],
+    "isArchived": false,
+    "order": 3,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-e9",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-todo",
+    "title": "Testar a comunicação entre visão computacional, backend e simulação",
+    "description": "Realizar teste de ponta a ponta: captura da webcam -> MediaPipe -> cálculos matemáticos -> SSE -> Three.js.",
+    "priority": "urgent",
+    "dueDate": "2026-11-10",
+    "labels": [
+      "lbl-backend",
+      "lbl-simulacao",
+      "lbl-visao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-e9-1",
+        "text": "Medir latência total ponta a ponta (Glass-to-Glass)",
+        "completed": false
+      },
+      {
+        "id": "chk-e9-2",
+        "text": "Verificar estabilidade em sessões prolongadas (> 15 min)",
+        "completed": false
+      }
+    ],
+    "notes": "Fluxo central completo da teleoperação virtual do TCC.",
+    "links": [],
+    "isArchived": false,
+    "order": 4,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-f1",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Validar a identificação individual da mão esquerda e direita na UI",
+    "description": "Conferir badges e títulos distintivos na interface para Left Hand (azul/ciano) e Right Hand (índigo/roxo).",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-interface"
+    ],
+    "checklists": [
+      {
+        "id": "chk-f1-1",
+        "text": "Conferir título \"Mão Direita\" / \"Right Hand\"",
+        "completed": true
+      },
+      {
+        "id": "chk-f1-2",
+        "text": "Conferir título \"Mão Esquerda\" / \"Left Hand\"",
+        "completed": true
+      },
+      {
+        "id": "chk-f1-3",
+        "text": "Verificar destaque de cor diferenciado",
+        "completed": true
+      }
+    ],
+    "notes": "Clareza imediata para a banca e operadores.",
+    "links": [],
+    "isArchived": false,
+    "order": 35,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-f2",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Conferir a indicação de PALMA, DORSO e NÃO DETECTADA",
+    "description": "Validar exibição do status de orientação em tempo real no card de diagnóstico com transição de cores.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-interface"
+    ],
+    "checklists": [
+      {
+        "id": "chk-f2-1",
+        "text": "Validar tag verde \"PALMA\"",
+        "completed": true
+      },
+      {
+        "id": "chk-f2-2",
+        "text": "Validar tag amarela/laranja \"DORSO\"",
+        "completed": true
+      },
+      {
+        "id": "chk-f2-3",
+        "text": "Validar tag cinza \"NÃO DETECTADA\"",
+        "completed": true
+      }
+    ],
+    "notes": "Feedback visual instantâneo do algoritmo de quiralidade.",
+    "links": [],
+    "isArchived": false,
+    "order": 36,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-f3",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Verificar os indicadores de FPS e latência",
+    "description": "Monitorar tacômetro/contador de FPS (frames por segundo) e latência em ms na barra superior da interface.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-interface"
+    ],
+    "checklists": [
+      {
+        "id": "chk-f3-1",
+        "text": "Verificar atualização a cada segundo",
+        "completed": true
+      },
+      {
+        "id": "chk-f3-2",
+        "text": "Verificar alerta de FPS baixo (< 20 FPS)",
+        "completed": true
+      }
+    ],
+    "notes": "Métrica de saúde do processamento de visão.",
+    "links": [],
+    "isArchived": false,
+    "order": 37,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-f4",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-inprogress",
+    "title": "Validar a apresentação dos ângulos individuais",
+    "description": "Exibir barras de progresso ou medidores circulares para os 5 dedos: Polegar, Indicador, Médio, Anelar e Mínimo.",
+    "priority": "medium",
+    "dueDate": "2026-11-02",
+    "labels": [
+      "lbl-interface",
+      "lbl-matematica"
+    ],
+    "checklists": [
+      {
+        "id": "chk-f4-1",
+        "text": "Conferir valores de 0° a 90° em cada dedo",
+        "completed": true
+      },
+      {
+        "id": "chk-f4-2",
+        "text": "Validar atualização dinâmica conforme flexão",
+        "completed": false
+      }
+    ],
+    "notes": "Demonstra a independência angular capturada pelo MediaPipe.",
+    "links": [],
+    "isArchived": false,
+    "order": 4,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-f5",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-review",
+    "title": "Verificar se os cartões de diagnóstico não se sobrepõem",
+    "description": "Garantir layout CSS responsivo com grid/flexbox para que os painéis de diagnóstico não sobreponham o canvas 3D ou o vídeo.",
+    "priority": "medium",
+    "dueDate": "2026-10-31",
+    "labels": [
+      "lbl-interface"
+    ],
+    "checklists": [
+      {
+        "id": "chk-f5-1",
+        "text": "Testar em resolução 1920x1080",
+        "completed": true
+      },
+      {
+        "id": "chk-f5-2",
+        "text": "Testar em resolução 1366x768 (notebooks)",
+        "completed": false
+      }
+    ],
+    "notes": "Garante apresentação limpa durante a defesa do TCC.",
+    "links": [],
+    "isArchived": false,
+    "order": 4,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-f6",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-todo",
+    "title": "Testar a atualização dos dados em tempo real",
+    "description": "Verificar render loop (requestAnimationFrame) para aplicação sem engasgos dos dados recebidos via SSE.",
+    "priority": "high",
+    "dueDate": "2026-11-10",
+    "labels": [
+      "lbl-interface",
+      "lbl-backend"
+    ],
+    "checklists": [
+      {
+        "id": "chk-f6-1",
+        "text": "Confirmar uso de requestAnimationFrame no cliente",
+        "completed": false
+      },
+      {
+        "id": "chk-f6-2",
+        "text": "Verificar ausência de vazamento de memória em execuções longas",
+        "completed": false
+      }
+    ],
+    "notes": "Fluidez essencial para demonstração prática.",
+    "links": [],
+    "isArchived": false,
+    "order": 5,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-f7",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-todo",
+    "title": "Conferir a legibilidade e organização visual da interface",
+    "description": "Revisar contraste de fontes, hierarquia visual, rótulos claros e organização geral do painel de teleoperação.",
+    "priority": "medium",
+    "dueDate": "2026-11-10",
+    "labels": [
+      "lbl-interface"
+    ],
+    "checklists": [
+      {
+        "id": "chk-f7-1",
+        "text": "Conferir contraste WCAG nas informações críticas",
+        "completed": false
+      },
+      {
+        "id": "chk-f7-2",
+        "text": "Remover textos de depuração redundantes da tela final",
+        "completed": false
+      }
+    ],
+    "notes": "Polimento visual de produto final.",
+    "links": [],
+    "isArchived": false,
+    "order": 6,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-g1",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Documentar a arquitetura de integração com o Arduino Nano",
+    "description": "Elaborar diagrama e documentação do fluxo de teleoperação física: Python Backend -> PySerial -> Arduino Nano -> Servomotores InMoov.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-hardware",
+      "lbl-docs"
+    ],
+    "checklists": [
+      {
+        "id": "chk-g1-1",
+        "text": "Documentar pinagem utilizada no microcontrolador",
+        "completed": true
+      },
+      {
+        "id": "chk-g1-2",
+        "text": "Descrever papel do Arduino Nano na modulação PWM",
+        "completed": true
+      }
+    ],
+    "notes": "Não inventar componentes ou pinagens não confirmadas.",
+    "links": [],
+    "isArchived": false,
+    "order": 38,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-g2",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Revisar o protocolo de comunicação serial",
+    "description": "Verificar taxa de transmissão (Baud Rate: ex. 115200 bps), formato de frame de dados (ex: <A0,A1,A2,A3,A4>) e checagem de integridade.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-hardware",
+      "lbl-backend"
+    ],
+    "checklists": [
+      {
+        "id": "chk-g2-1",
+        "text": "Conferir Baud Rate configurado no sketch Arduino",
+        "completed": true
+      },
+      {
+        "id": "chk-g2-2",
+        "text": "Conferir delimitadores de início e fim de mensagem",
+        "completed": true
+      },
+      {
+        "id": "chk-g2-3",
+        "text": "Validar parser de string para inteiros no C++",
+        "completed": true
+      }
+    ],
+    "notes": "Garante transmissão sem perda de sincronismo de frame serial.",
+    "links": [],
+    "isArchived": false,
+    "order": 39,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-g3",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-todo",
+    "title": "Validar o envio dos comandos da mão direita ao Arduino",
+    "description": "Garantir que apenas os dados correspondentes à mão direita (Right Hand) sejam roteados para a porta serial COM do hardware.",
+    "priority": "high",
+    "dueDate": "2026-11-10",
+    "labels": [
+      "lbl-hardware"
+    ],
+    "checklists": [
+      {
+        "id": "chk-g3-1",
+        "text": "Filtrar payload serial apenas para Right Hand",
+        "completed": false
+      },
+      {
+        "id": "chk-g3-2",
+        "text": "Validar mapeamento angular [0°-90°] para pulsos de servo [1000us-2000us]",
+        "completed": false
+      }
+    ],
+    "notes": "Conforme especificado, o hardware real corresponde à mão direita.",
+    "links": [],
+    "isArchived": false,
+    "order": 7,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-g4",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-todo",
+    "title": "Garantir que a mão esquerda permaneça exclusivamente na simulação",
+    "description": "Assegurar que a mão esquerda (Left Hand) opere no Three.js sem tentar abrir portas seriais inexistentes no hardware.",
+    "priority": "medium",
+    "dueDate": "2026-11-10",
+    "labels": [
+      "lbl-hardware",
+      "lbl-simulacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-g4-1",
+        "text": "Verificar isolamento de hardware para a mão esquerda",
+        "completed": false
+      },
+      {
+        "id": "chk-g4-2",
+        "text": "Confirmar funcionamento 100% autônomo no Three.js",
+        "completed": false
+      }
+    ],
+    "notes": "Enquanto não houver hardware físico para a mão esquerda.",
+    "links": [],
+    "isArchived": false,
+    "order": 8,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-g5",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-todo",
+    "title": "Conferir o mapeamento dos movimentos para os atuadores",
+    "description": "Calibrar limites mecânicos dos servomotores (ex: MG995 / MG996R) para evitar sobrecurso mecânico nos tendões da mão InMoov.",
+    "priority": "high",
+    "dueDate": "2026-11-10",
+    "labels": [
+      "lbl-hardware"
+    ],
+    "checklists": [
+      {
+        "id": "chk-g5-1",
+        "text": "Verificar limites de curso mínimo e máximo por dedo",
+        "completed": false
+      },
+      {
+        "id": "chk-g5-2",
+        "text": "Ajustar mapa map(angle, 0, 90, servoMin, servoMax)",
+        "completed": false
+      }
+    ],
+    "notes": "Evita travar os cabos de tração de nylon do InMoov.",
+    "links": [],
+    "isArchived": false,
+    "order": 9,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-g6",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-backlog",
+    "title": "Revisar o pinout e os requisitos elétricos dos componentes reais",
+    "description": "Conferir pinos PWM digitais do Arduino Nano (D3, D5, D6, D9, D10, D11) conectados aos fios de sinal dos servos.",
+    "priority": "medium",
+    "dueDate": null,
+    "labels": [
+      "lbl-hardware",
+      "lbl-docs"
+    ],
+    "checklists": [
+      {
+        "id": "chk-g6-1",
+        "text": "Mapear pinos de controle de cada servo no sketch",
+        "completed": false
+      },
+      {
+        "id": "chk-g6-2",
+        "text": "Confirmar conexão comum de terra (GND comum)",
+        "completed": false
+      }
+    ],
+    "notes": "Não inventar pinagens não verificadas fisicamente.",
+    "links": [],
+    "isArchived": false,
+    "order": 0,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-g7",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-backlog",
+    "title": "Validar a alimentação e os limites elétricos antes de energizar",
+    "description": "Garantir fonte externa de 5V-6V com capacidade de corrente suficiente (3A-5A) separada da alimentação USB do Arduino.",
+    "priority": "urgent",
+    "dueDate": null,
+    "labels": [
+      "lbl-hardware"
+    ],
+    "checklists": [
+      {
+        "id": "chk-g7-1",
+        "text": "Verificar fonte de alimentação externa para os servomotores",
+        "completed": false
+      },
+      {
+        "id": "chk-g7-2",
+        "text": "Garantir que os servos NÃO são alimentados pelo pino 5V do Arduino",
+        "completed": false
+      },
+      {
+        "id": "chk-g7-3",
+        "text": "Unificar GND da fonte com GND do Arduino",
+        "completed": false
+      }
+    ],
+    "notes": "Requisito de segurança elétrico crítico para evitar queimar o microcontrolador.",
+    "links": [],
+    "isArchived": false,
+    "order": 1,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-g8",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-backlog",
+    "title": "Testar a comunicação serial sem colocar os componentes em risco",
+    "description": "Testar com Serial Monitor ou LEDs de depuração antes de conectar os atuadores mecânicos aos tendões.",
+    "priority": "medium",
+    "dueDate": null,
+    "labels": [
+      "lbl-hardware",
+      "lbl-testes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-g8-1",
+        "text": "Enviar frames de teste via Serial Monitor",
+        "completed": false
+      },
+      {
+        "id": "chk-g8-2",
+        "text": "Verificar resposta e eco no terminal serial",
+        "completed": false
+      }
+    ],
+    "notes": "Procedimento preventivo de bancada.",
+    "links": [],
+    "isArchived": false,
+    "order": 2,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-g9",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-backlog",
+    "title": "Documentar os procedimentos de teste e segurança do hardware",
+    "description": "Criar guia com passo a passo de inicialização, energização, teste de calibração e desligamento seguro da mão robótica.",
+    "priority": "medium",
+    "dueDate": null,
+    "labels": [
+      "lbl-hardware",
+      "lbl-docs"
+    ],
+    "checklists": [
+      {
+        "id": "chk-g9-1",
+        "text": "Documentar checklist pré-energização",
+        "completed": false
+      },
+      {
+        "id": "chk-g9-2",
+        "text": "Documentar parada de emergência",
+        "completed": false
+      }
+    ],
+    "notes": "Item essencial no capítulo de hardware do TCC.",
+    "links": [],
+    "isArchived": false,
+    "order": 3,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-t1",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Executar e validar testes de orientação (tests/test_orientation.py)",
+    "description": "Executar o script automatizado de testes de cinemática e orientação vetorial. Comando: .\\venv\\Scripts\\python.exe tests/test_orientation.py",
+    "priority": "urgent",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-testes",
+      "lbl-matematica"
+    ],
+    "checklists": [
+      {
+        "id": "chk-t1-1",
+        "text": "Executar test_four_scenarios (4 combinações mão/orientação)",
+        "completed": true
+      },
+      {
+        "id": "chk-t1-2",
+        "text": "Executar test_full_rotation_trajectory (det(R)=1, tol 10⁻⁴)",
+        "completed": true
+      },
+      {
+        "id": "chk-t1-3",
+        "text": "Validar norma do vetor normal (tol 10⁻⁵)",
+        "completed": true
+      },
+      {
+        "id": "chk-t1-4",
+        "text": "Verificar continuidade geodésica dos quatérnions",
+        "completed": true
+      },
+      {
+        "id": "chk-t1-5",
+        "text": "Executar test_individual_finger_movements (flexão isolada)",
+        "completed": true
+      },
+      {
+        "id": "chk-t1-6",
+        "text": "Confirmar independência dos demais dedos",
+        "completed": true
+      }
+    ],
+    "notes": "Comando: .\\venv\\Scripts\\python.exe tests/test_orientation.py",
+    "links": [
+      {
+        "id": "lnk-t1",
+        "title": "Arquivo de Teste",
+        "url": "tests/test_orientation.py"
+      }
+    ],
+    "isArchived": false,
+    "order": 40,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-t2",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Executar e validar testes de streaming SSE (tests/test_stream.py)",
+    "description": "Executar o script automatizado de testes de comunicação e eventos SSE. Comando: .\\venv\\Scripts\\python.exe tests/test_stream.py",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-testes",
+      "lbl-backend"
+    ],
+    "checklists": [
+      {
+        "id": "chk-t2-1",
+        "text": "Validar payload bimanual",
+        "completed": true
+      },
+      {
+        "id": "chk-t2-2",
+        "text": "Testar retrocompatibilidade de campos",
+        "completed": true
+      },
+      {
+        "id": "chk-t2-3",
+        "text": "Testar isolamento entre as mãos",
+        "completed": true
+      },
+      {
+        "id": "chk-t2-4",
+        "text": "Validar sequência incremental do SSE",
+        "completed": true
+      },
+      {
+        "id": "chk-t2-5",
+        "text": "Verificar cabeçalhos e formato das respostas",
+        "completed": true
+      }
+    ],
+    "notes": "Comando: .\\venv\\Scripts\\python.exe tests/test_stream.py",
+    "links": [
+      {
+        "id": "lnk-t2",
+        "title": "Arquivo de Teste",
+        "url": "tests/test_stream.py"
+      }
+    ],
+    "isArchived": false,
+    "order": 41,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-t3",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-inprogress",
+    "title": "Executar teste de fumaça geral (smoke_debug.py)",
+    "description": "Executar o teste de fumaça das rotas e endpoints centrais. Comando: .\\venv\\Scripts\\python.exe smoke_debug.py",
+    "priority": "high",
+    "dueDate": "2026-11-02",
+    "labels": [
+      "lbl-testes",
+      "lbl-backend"
+    ],
+    "checklists": [
+      {
+        "id": "chk-t3-1",
+        "text": "Validar rota / (Página principal)",
+        "completed": true
+      },
+      {
+        "id": "chk-t3-2",
+        "text": "Validar rota /debug (Painel de depuração)",
+        "completed": false
+      },
+      {
+        "id": "chk-t3-3",
+        "text": "Validar rota /api/hand (Endpoint JSON)",
+        "completed": false
+      },
+      {
+        "id": "chk-t3-4",
+        "text": "Validar rota /debug/landmarks (Visualizador de pontos)",
+        "completed": false
+      }
+    ],
+    "notes": "Comando: .\\venv\\Scripts\\python.exe smoke_debug.py",
+    "links": [
+      {
+        "id": "lnk-t3",
+        "title": "Arquivo de Teste",
+        "url": "smoke_debug.py"
+      }
+    ],
+    "isArchived": false,
+    "order": 5,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-doc1",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Revisar documentação: README.md",
+    "description": "Visão geral do repositório InMoov Hand Control, guia de instalação, execução rápida e requisitos.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-docs"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d1-1",
+        "text": "Verificar existência do arquivo",
+        "completed": true
+      },
+      {
+        "id": "chk-d1-2",
+        "text": "Correção técnica do conteúdo",
+        "completed": true
+      },
+      {
+        "id": "chk-d1-3",
+        "text": "Correspondência com o código atual",
+        "completed": true
+      },
+      {
+        "id": "chk-d1-4",
+        "text": "Instruções de instalação e comandos de execução",
+        "completed": true
+      },
+      {
+        "id": "chk-d1-5",
+        "text": "Revisão final",
+        "completed": true
+      }
+    ],
+    "notes": "Arquivo: README.md",
+    "links": [],
+    "isArchived": false,
+    "order": 42,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-doc2",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Revisar documentação: DOCUMENTACAO_TECNICA.md",
+    "description": "Documentação técnica detalhada de todo o ecossistema do TCC.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-docs"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d2-1",
+        "text": "Verificar existência do arquivo",
+        "completed": true
+      },
+      {
+        "id": "chk-d2-2",
+        "text": "Correção técnica do conteúdo",
+        "completed": true
+      },
+      {
+        "id": "chk-d2-3",
+        "text": "Correspondência com o código atual",
+        "completed": true
+      },
+      {
+        "id": "chk-d2-4",
+        "text": "Inclusão de fórmulas, diagramas ou referências",
+        "completed": true
+      },
+      {
+        "id": "chk-d2-5",
+        "text": "Revisão final",
+        "completed": true
+      }
+    ],
+    "notes": "Arquivo: DOCUMENTACAO_TECNICA.md",
+    "links": [],
+    "isArchived": false,
+    "order": 43,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-doc3",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Revisar documentação: ARQUITETURA.md",
+    "description": "Arquitetura do sistema, divisão em camadas, fluxo de dados e comunicação entre processos.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-docs"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d3-1",
+        "text": "Verificar existência do arquivo",
+        "completed": true
+      },
+      {
+        "id": "chk-d3-2",
+        "text": "Correção técnica do conteúdo",
+        "completed": true
+      },
+      {
+        "id": "chk-d3-3",
+        "text": "Correspondência com o código atual",
+        "completed": true
+      },
+      {
+        "id": "chk-d3-4",
+        "text": "Diagramas de arquitetura",
+        "completed": true
+      },
+      {
+        "id": "chk-d3-5",
+        "text": "Revisão final",
+        "completed": true
+      }
+    ],
+    "notes": "Arquivo: ARQUITETURA.md",
+    "links": [],
+    "isArchived": false,
+    "order": 44,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-doc4",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Revisar documentação: VISAO_COMPUTACIONAL.md",
+    "description": "Pipeline de visão computacional, OpenCV, pré-processamento de imagem e taxas de captura.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-docs",
+      "lbl-visao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d4-1",
+        "text": "Verificar existência do arquivo",
+        "completed": true
+      },
+      {
+        "id": "chk-d4-2",
+        "text": "Correção técnica do conteúdo",
+        "completed": true
+      },
+      {
+        "id": "chk-d4-3",
+        "text": "Correspondência com o código atual",
+        "completed": true
+      },
+      {
+        "id": "chk-d4-4",
+        "text": "Revisão final",
+        "completed": true
+      }
+    ],
+    "notes": "Arquivo: VISAO_COMPUTACIONAL.md",
+    "links": [],
+    "isArchived": false,
+    "order": 45,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-doc5",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Revisar documentação: MEDIAPIPE.md",
+    "description": "Integração com Google MediaPipe Hand Landmarker, modelos de inferência e os 21 pontos-chave.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-docs",
+      "lbl-mediapipe"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d5-1",
+        "text": "Verificar existência do arquivo",
+        "completed": true
+      },
+      {
+        "id": "chk-d5-2",
+        "text": "Correção técnica do conteúdo",
+        "completed": true
+      },
+      {
+        "id": "chk-d5-3",
+        "text": "Correspondência com o código atual",
+        "completed": true
+      },
+      {
+        "id": "chk-d5-4",
+        "text": "Revisão final",
+        "completed": true
+      }
+    ],
+    "notes": "Arquivo: MEDIAPIPE.md",
+    "links": [],
+    "isArchived": false,
+    "order": 46,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-doc6",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Revisar documentação: MAO_3D.md",
+    "description": "Construção da mão robótica 3D em Three.js, articulações e splay dinâmico.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-docs",
+      "lbl-simulacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d6-1",
+        "text": "Verificar existência do arquivo",
+        "completed": true
+      },
+      {
+        "id": "chk-d6-2",
+        "text": "Correção técnica do conteúdo",
+        "completed": true
+      },
+      {
+        "id": "chk-d6-3",
+        "text": "Fórmulas e rotações Three.js",
+        "completed": true
+      },
+      {
+        "id": "chk-d6-4",
+        "text": "Revisão final",
+        "completed": true
+      }
+    ],
+    "notes": "Arquivo: MAO_3D.md",
+    "links": [],
+    "isArchived": false,
+    "order": 47,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-doc7",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Revisar documentação: PALMA_DORSO.md",
+    "description": "Fundamentação matemática da classificação de palma e dorso e fator de quiralidade shand.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-docs",
+      "lbl-matematica"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d7-1",
+        "text": "Verificar existência do arquivo",
+        "completed": true
+      },
+      {
+        "id": "chk-d7-2",
+        "text": "Fórmula n_palm = shand · (u_long × u_trans) documentada",
+        "completed": true
+      },
+      {
+        "id": "chk-d7-3",
+        "text": "Correspondência com o código atual",
+        "completed": true
+      },
+      {
+        "id": "chk-d7-4",
+        "text": "Revisão final",
+        "completed": true
+      }
+    ],
+    "notes": "Arquivo: PALMA_DORSO.md",
+    "links": [],
+    "isArchived": false,
+    "order": 48,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-doc8",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Revisar documentação: ANGULOS_E_LANDMARKS.md",
+    "description": "Mapeamento trigonométrico dos ângulos articulares (PIP, DIP, TOTAL) a partir dos 21 landmarks.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-docs",
+      "lbl-matematica"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d8-1",
+        "text": "Verificar existência do arquivo",
+        "completed": true
+      },
+      {
+        "id": "chk-d8-2",
+        "text": "Fórmula TOTAL = (PIP + DIP) / 2",
+        "completed": true
+      },
+      {
+        "id": "chk-d8-3",
+        "text": "Revisão final",
+        "completed": true
+      }
+    ],
+    "notes": "Arquivo: ANGULOS_E_LANDMARKS.md",
+    "links": [],
+    "isArchived": false,
+    "order": 49,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-doc9",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Revisar documentação: DUAS_MAOS.md",
+    "description": "Arquitetura de rastreamento bimanual e independência de estado Left / Right.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-docs"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d9-1",
+        "text": "Verificar existência do arquivo",
+        "completed": true
+      },
+      {
+        "id": "chk-d9-2",
+        "text": "Correção técnica do conteúdo",
+        "completed": true
+      },
+      {
+        "id": "chk-d9-3",
+        "text": "Revisão final",
+        "completed": true
+      }
+    ],
+    "notes": "Arquivo: DUAS_MAOS.md",
+    "links": [],
+    "isArchived": false,
+    "order": 50,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-doc10",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Revisar documentação: DIAGNOSTICO.md",
+    "description": "Descrição dos painéis de telemetria, indicadores de latência e tela de diagnóstico.",
+    "priority": "low",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-docs",
+      "lbl-interface"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d10-1",
+        "text": "Verificar existência do arquivo",
+        "completed": true
+      },
+      {
+        "id": "chk-d10-2",
+        "text": "Correção técnica do conteúdo",
+        "completed": true
+      },
+      {
+        "id": "chk-d10-3",
+        "text": "Revisão final",
+        "completed": true
+      }
+    ],
+    "notes": "Arquivo: DIAGNOSTICO.md",
+    "links": [],
+    "isArchived": false,
+    "order": 51,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-doc11",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-review",
+    "title": "Revisar documentação: TESTES.md",
+    "description": "Guia de execução e critérios de aceitação dos testes automatizados e de fumaça.",
+    "priority": "high",
+    "dueDate": "2026-10-31",
+    "labels": [
+      "lbl-docs",
+      "lbl-testes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d11-1",
+        "text": "Verificar existência do arquivo",
+        "completed": true
+      },
+      {
+        "id": "chk-d11-2",
+        "text": "Instruções para test_orientation.py, test_stream.py e smoke_debug.py",
+        "completed": false
+      },
+      {
+        "id": "chk-d11-3",
+        "text": "Revisão final",
+        "completed": false
+      }
+    ],
+    "notes": "Arquivo: TESTES.md",
+    "links": [],
+    "isArchived": false,
+    "order": 5,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-doc12",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-review",
+    "title": "Revisar documentação: LIMITACOES.md",
+    "description": "Registro honesto das limitações técnicas do sistema (iluminação, oclusão extrema, hardware 1-mão).",
+    "priority": "medium",
+    "dueDate": "2026-10-31",
+    "labels": [
+      "lbl-docs"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d12-1",
+        "text": "Verificar existência do arquivo",
+        "completed": true
+      },
+      {
+        "id": "chk-d12-2",
+        "text": "Correção técnica do conteúdo",
+        "completed": false
+      },
+      {
+        "id": "chk-d12-3",
+        "text": "Revisão final",
+        "completed": false
+      }
+    ],
+    "notes": "Arquivo: LIMITACOES.md — Fundamental para postura acadêmica no TCC.",
+    "links": [],
+    "isArchived": false,
+    "order": 6,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-doc13",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-inprogress",
+    "title": "Revisar documentação: DECISOES_TECNICAS.md",
+    "description": "Registro das decisões arquiteturais (ADRs), escolha de OpenCV, MediaPipe Tasks, Three.js, SSE e Arduino.",
+    "priority": "medium",
+    "dueDate": "2026-11-02",
+    "labels": [
+      "lbl-docs"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d13-1",
+        "text": "Verificar existência do arquivo",
+        "completed": true
+      },
+      {
+        "id": "chk-d13-2",
+        "text": "Justificativas fundamentadas de cada escolha",
+        "completed": false
+      },
+      {
+        "id": "chk-d13-3",
+        "text": "Revisão final",
+        "completed": false
+      }
+    ],
+    "notes": "Arquivo: DECISOES_TECNICAS.md",
+    "links": [],
+    "isArchived": false,
+    "order": 6,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-doc14",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Revisar documentação: PROBLEMAS_E_CORRECOES.md",
+    "description": "Histórico completo dos problemas encontrados durante a pesquisa e suas soluções técnicas comprovadas.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-docs",
+      "lbl-correcoes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d14-1",
+        "text": "Verificar existência do arquivo",
+        "completed": true
+      },
+      {
+        "id": "chk-d14-2",
+        "text": "Inclusão dos 4 problemas documentados",
+        "completed": true
+      },
+      {
+        "id": "chk-d14-3",
+        "text": "Revisão final",
+        "completed": true
+      }
+    ],
+    "notes": "Arquivo: PROBLEMAS_E_CORRECOES.md",
+    "links": [],
+    "isArchived": false,
+    "order": 52,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-doc15",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-review",
+    "title": "Revisar documentação: HARDWARE_ARDUINO.md",
+    "description": "Esquema elétrico, pinagem Arduino Nano, alimentação de servomotores e código C++ do firmware.",
+    "priority": "medium",
+    "dueDate": "2026-10-31",
+    "labels": [
+      "lbl-docs",
+      "lbl-hardware"
+    ],
+    "checklists": [
+      {
+        "id": "chk-d15-1",
+        "text": "Verificar existência do arquivo",
+        "completed": true
+      },
+      {
+        "id": "chk-d15-2",
+        "text": "Conferência de dados elétricos reais",
+        "completed": false
+      },
+      {
+        "id": "chk-d15-3",
+        "text": "Revisão final",
+        "completed": false
+      }
+    ],
+    "notes": "Arquivo: HARDWARE_ARDUINO.md",
+    "links": [],
+    "isArchived": false,
+    "order": 7,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-apr1",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Elaborar o roteiro de apresentação de 15 a 20 minutos",
+    "description": "Caminho de referência: APRESENTACAO/ROTEIRO_APRESENTACAO.md. Estruturar tempo: Introdução (3 min), Metodologia & Visão (5 min), Simulação 3D & Hardware (4 min), Demonstração (4 min), Conclusão (2 min).",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-apresentacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-ap1-1",
+        "text": "Definir blocos de tempo por seção",
+        "completed": true
+      },
+      {
+        "id": "chk-ap1-2",
+        "text": "Revisar coerência com os slides",
+        "completed": true
+      }
+    ],
+    "notes": "Referência: APRESENTACAO/ROTEIRO_APRESENTACAO.md",
+    "links": [],
+    "isArchived": false,
+    "order": 53,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-apr2",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-inprogress",
+    "title": "Preparar o roteiro de fala para a defesa",
+    "description": "Caminho de referência: APRESENTACAO/ROTEIRO_DE_FALA.md. Elaborar texto de apoio com transições fluidas e vocabulário técnico preciso.",
+    "priority": "high",
+    "dueDate": "2026-11-02",
+    "labels": [
+      "lbl-apresentacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-ap2-1",
+        "text": "Redigir falas de introdução e motivação",
+        "completed": true
+      },
+      {
+        "id": "chk-ap2-2",
+        "text": "Redigir explicação das fórmulas matemáticas",
+        "completed": false
+      },
+      {
+        "id": "chk-ap2-3",
+        "text": "Redigir roteiro da demonstração ao vivo",
+        "completed": false
+      }
+    ],
+    "notes": "Referência: APRESENTACAO/ROTEIRO_DE_FALA.md",
+    "links": [],
+    "isArchived": false,
+    "order": 7,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-apr3",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-review",
+    "title": "Organizar as perguntas prováveis da banca examinadora",
+    "description": "Caminho de referência: APRESENTACAO/PERGUNTAS_DA_BANCA.md. Mapear questionamentos sobre latência, precisão do MediaPipe, custo, segurança do hardware e limitações.",
+    "priority": "high",
+    "dueDate": "2026-10-31",
+    "labels": [
+      "lbl-apresentacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-ap3-1",
+        "text": "Listar perguntas sobre visão computacional e oclusão",
+        "completed": true
+      },
+      {
+        "id": "chk-ap3-2",
+        "text": "Listar perguntas sobre quiralidade e cinemática",
+        "completed": false
+      },
+      {
+        "id": "chk-ap3-3",
+        "text": "Listar perguntas sobre custos e viabilidade prática",
+        "completed": false
+      }
+    ],
+    "notes": "Referência: APRESENTACAO/PERGUNTAS_DA_BANCA.md",
+    "links": [],
+    "isArchived": false,
+    "order": 8,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-apr4",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-review",
+    "title": "Elaborar respostas técnicas fundamentadas para a banca",
+    "description": "Caminho de referência: APRESENTACAO/RESPOSTAS_DA_BANCA.md. Redigir respostas com embasamento matemático, referências a testes e justificativas de projeto.",
+    "priority": "high",
+    "dueDate": "2026-10-31",
+    "labels": [
+      "lbl-apresentacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-ap4-1",
+        "text": "Elaborar respostas para questionamentos matemáticos",
+        "completed": true
+      },
+      {
+        "id": "chk-ap4-2",
+        "text": "Elaborar respostas para questionamentos de hardware",
+        "completed": false
+      }
+    ],
+    "notes": "Referência: APRESENTACAO/RESPOSTAS_DA_BANCA.md",
+    "links": [],
+    "isArchived": false,
+    "order": 9,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-apr5",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-inprogress",
+    "title": "Criar o resumo para revisão e memorização rápida",
+    "description": "Caminho de referência: APRESENTACAO/RESUMO_PARA_DECORAR.md. Criar cartão de bolso/cola com números-chave (FPS, latência, fórmulas, tolerâncias de teste).",
+    "priority": "medium",
+    "dueDate": "2026-11-02",
+    "labels": [
+      "lbl-apresentacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-ap5-1",
+        "text": "Compilar fórmulas e convenções (shand, K, SO(3))",
+        "completed": true
+      },
+      {
+        "id": "chk-ap5-2",
+        "text": "Compilar comandos de teste e execução",
+        "completed": false
+      }
+    ],
+    "notes": "Referência: APRESENTACAO/RESUMO_PARA_DECORAR.md",
+    "links": [],
+    "isArchived": false,
+    "order": 8,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-apr6",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Preparar os diagramas de arquitetura e fluxo para os slides",
+    "description": "Exportar diagramas de alta resolução do pipeline e da arquitetura para inclusão na apresentação.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-apresentacao",
+      "lbl-docs"
+    ],
+    "checklists": [
+      {
+        "id": "chk-ap6-1",
+        "text": "Gerar diagrama de pipeline em alta resolução",
+        "completed": true
+      },
+      {
+        "id": "chk-ap6-2",
+        "text": "Gerar diagrama de hardware e comunicação",
+        "completed": true
+      }
+    ],
+    "notes": "Visual profissional para a banca.",
+    "links": [],
+    "isArchived": false,
+    "order": 54,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-apr7",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Selecionar demonstrações práticas do sistema",
+    "description": "Definir sequência de movimentos para demonstrar na bancada: pinça, contagem com dedos, rotação 360° e controle bimanual.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-apresentacao",
+      "lbl-testes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-ap7-1",
+        "text": "Definir sequência coreografada de gestos",
+        "completed": true
+      },
+      {
+        "id": "chk-ap7-2",
+        "text": "Preparar vídeo backup caso haja imprevistos com a webcam",
+        "completed": true
+      }
+    ],
+    "notes": "Plano de contingência para a apresentação presencial.",
+    "links": [],
+    "isArchived": false,
+    "order": 55,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-apr8",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-todo",
+    "title": "Validar o funcionamento da demonstração antes da apresentação",
+    "description": "Checklist de pré-voo: iluminação ambiente, conexão da webcam, calibração de porta serial e carregamento do navegador.",
+    "priority": "urgent",
+    "dueDate": "2026-11-10",
+    "labels": [
+      "lbl-apresentacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-ap8-1",
+        "text": "Testar iluminação e fundo da câmera",
+        "completed": false
+      },
+      {
+        "id": "chk-ap8-2",
+        "text": "Executar smoke_debug.py",
+        "completed": false
+      }
+    ],
+    "notes": "Garante zero surpresas no dia da defesa.",
+    "links": [],
+    "isArchived": false,
+    "order": 10,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-apr9",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-todo",
+    "title": "Revisar os slides e a sequência da apresentação",
+    "description": "Revisão ortográfica, alinhamento visual, consistência de fontes e clareza dos tópicos nos slides.",
+    "priority": "medium",
+    "dueDate": "2026-11-10",
+    "labels": [
+      "lbl-apresentacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-ap9-1",
+        "text": "Revisar slides técnicos",
+        "completed": false
+      },
+      {
+        "id": "chk-ap9-2",
+        "text": "Conferir numeração e referências bibliográficas",
+        "completed": false
+      }
+    ],
+    "notes": "Acabamento final dos slides.",
+    "links": [],
+    "isArchived": false,
+    "order": 11,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-apr10",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-todo",
+    "title": "Realizar um ensaio completo cronometrado",
+    "description": "Simular a apresentação completa do início ao fim com cronômetro para validar tempo alvo de 18 minutos.",
+    "priority": "urgent",
+    "dueDate": "2026-11-10",
+    "labels": [
+      "lbl-apresentacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-ap10-1",
+        "text": "Ensaio 1 (cronometrado)",
+        "completed": false
+      },
+      {
+        "id": "chk-ap10-2",
+        "text": "Ajuste de ritmo e transições",
+        "completed": false
+      },
+      {
+        "id": "chk-ap10-3",
+        "text": "Ensaio geral final com demo",
+        "completed": false
+      }
+    ],
+    "notes": "Treinamento prático de oratória e tempo.",
+    "links": [],
+    "isArchived": false,
+    "order": 12,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-diag1",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Diagrama: Pipeline de Visão Computacional (Mermaid/ASCII)",
+    "description": "Criar/revisar diagrama do pipeline: Webcam -> cv2.flip -> cv2.cvtColor(BGR2RGB) -> mp.Image -> detect_for_video -> 21 Landmarks.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-docs",
+      "lbl-visao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-dg1-1",
+        "text": "Esboçar nós de processamento",
+        "completed": true
+      },
+      {
+        "id": "chk-dg1-2",
+        "text": "Renderizar em Mermaid no documento",
+        "completed": true
+      }
+    ],
+    "notes": "Incluso no VISAO_COMPUTACIONAL.md.",
+    "links": [],
+    "isArchived": false,
+    "order": 56,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-diag2",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Diagrama: Arquitetura Geral do Sistema",
+    "description": "Diagrama em blocos integrando Camada de Visão, Camada de Cinemática, Camada de Servidor/API, Camada de Simulação 3D e Camada de Hardware.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-docs"
+    ],
+    "checklists": [
+      {
+        "id": "chk-dg2-1",
+        "text": "Elaborar diagrama de blocos arquiteturais",
+        "completed": true
+      },
+      {
+        "id": "chk-dg2-2",
+        "text": "Revisar interfaces entre módulos",
+        "completed": true
+      }
+    ],
+    "notes": "Incluso no ARQUITETURA.md.",
+    "links": [],
+    "isArchived": false,
+    "order": 57,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-diag3",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Diagrama: Fluxo de Dados (Webcam -> MediaPipe -> Backend -> Simulação)",
+    "description": "Diagrama de sequência detalhando a passagem assíncrona de mensagens, SSE e taxas de amostragem.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-docs",
+      "lbl-backend"
+    ],
+    "checklists": [
+      {
+        "id": "chk-dg3-1",
+        "text": "Mapear protocolo SSE e payloads JSON",
+        "completed": true
+      },
+      {
+        "id": "chk-dg3-2",
+        "text": "Inserir no DOCUMENTACAO_TECNICA.md",
+        "completed": true
+      }
+    ],
+    "notes": "Diagrama de sequência.",
+    "links": [],
+    "isArchived": false,
+    "order": 58,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-diag4",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Diagrama: Cálculo da Orientação da Palma e Quiralidade",
+    "description": "Esquema visual dos vetores u_long, u_trans e vetor normal n_palm com indicação da regra da mão direita e fator shand.",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-docs",
+      "lbl-matematica"
+    ],
+    "checklists": [
+      {
+        "id": "chk-dg4-1",
+        "text": "Desenhar representação 3D dos eixos da palma",
+        "completed": true
+      },
+      {
+        "id": "chk-dg4-2",
+        "text": "Destacar inversão para a mão esquerda (shand = -1)",
+        "completed": true
+      }
+    ],
+    "notes": "Incluso no PALMA_DORSO.md.",
+    "links": [],
+    "isArchived": false,
+    "order": 59,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-diag5",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-review",
+    "title": "Diagrama: Comunicação com o Arduino e Hardware",
+    "description": "Diagrama esquemático das conexões elétricas, divisor de alimentação, GND compartilhado e linhas de sinal PWM.",
+    "priority": "medium",
+    "dueDate": "2026-10-31",
+    "labels": [
+      "lbl-docs",
+      "lbl-hardware"
+    ],
+    "checklists": [
+      {
+        "id": "chk-dg5-1",
+        "text": "Esquematizar Arduino Nano, Servos e Fonte 5V",
+        "completed": true
+      },
+      {
+        "id": "chk-dg5-2",
+        "text": "Inserir no HARDWARE_ARDUINO.md",
+        "completed": false
+      }
+    ],
+    "notes": "Incluso no HARDWARE_ARDUINO.md.",
+    "links": [],
+    "isArchived": false,
+    "order": 10,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-diag6",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-review",
+    "title": "Diagrama: Fluxo de Execução dos Testes Automatizados",
+    "description": "Diagrama do fluxo de CI/teste local executando a suíte de testes de orientação, streaming e fumaça.",
+    "priority": "low",
+    "dueDate": "2026-10-31",
+    "labels": [
+      "lbl-docs",
+      "lbl-testes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-dg6-1",
+        "text": "Mapear pirâmide de testes do projeto",
+        "completed": true
+      },
+      {
+        "id": "chk-dg6-2",
+        "text": "Inserir no TESTES.md",
+        "completed": false
+      }
+    ],
+    "notes": "Incluso no TESTES.md.",
+    "links": [],
+    "isArchived": false,
+    "order": 11,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-prob1",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Problema 1: Inconsistência de palma e dorso entre as mãos",
+    "description": "Sintoma: A mão direita classificava corretamente como PALMA/DORSO, enquanto a mão esquerda apresentava inversão constante dos rótulos.\n\nCausa Raiz: O produto vetorial u_long × u_trans possui orientação intrínseca dextrógira. Para a mão esquerda, a geometria anatômica dos landmarks inverte a direção da normal sem o fator de quiralidade.\n\nSolução: Introdução do fator de quiralidade shand: n_palm = shand · (u_long × u_trans), onde shand = +1 (Right) e shand = -1 (Left).\n\nArquivos envolvidos: pipeline de visão, módulo de cinemática/orientação.\n\nTestes que comprovam: test_four_scenarios em tests/test_orientation.py.\n\nStatus: Solução implementada e validada com sucesso nos testes automatizados (test_four_scenarios).",
+    "priority": "urgent",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-correcoes",
+      "lbl-matematica",
+      "lbl-testes"
+    ],
+    "checklists": [
+      {
+        "id": "chk-p1-1",
+        "text": "Revisar sintoma e causa raiz documentados",
+        "completed": true
+      },
+      {
+        "id": "chk-p1-2",
+        "text": "Inspecionar código do cálculo da normal da palma",
+        "completed": true
+      },
+      {
+        "id": "chk-p1-3",
+        "text": "Executar tests/test_orientation.py para comprovação",
+        "completed": true
+      }
+    ],
+    "notes": "Fórmula aplicada: n_palm = shand · (u_long × u_trans)",
+    "links": [],
+    "isArchived": false,
+    "order": 60,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-prob2",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Problema 2: Cálculo incorreto do ângulo total das articulações",
+    "description": "Sintoma: A flexão dos dedos na simulação apresentava valor duplicado (excedendo 180° e causando deformações visuais nas falanges).\n\nCausa Raiz: O ângulo total estava sendo calculado como a soma simples TOTAL = PIP + DIP em vez da média das articulações.\n\nSolução: Correção da fórmula para média aritmética: TOTAL = (PIP + DIP) / 2, normalizando o valor para a escala esperada de [0°, 90°].\n\nArquivos envolvidos: módulo de cálculo angular e mapeamento cinemático.\n\nTestes que comprovam: test_individual_finger_movements em tests/test_orientation.py.\n\nStatus: Solução implementada e validada com sucesso nos testes automatizados (test_four_scenarios).",
+    "priority": "high",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-correcoes",
+      "lbl-matematica",
+      "lbl-simulacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-p2-1",
+        "text": "Revisar fórmula TOTAL = (PIP + DIP) / 2 no código",
+        "completed": true
+      },
+      {
+        "id": "chk-p2-2",
+        "text": "Conferir valores transmitidos via /api/hand",
+        "completed": true
+      },
+      {
+        "id": "chk-p2-3",
+        "text": "Executar testes automatizados de articulação",
+        "completed": true
+      }
+    ],
+    "notes": "Fórmula aplicada: TOTAL = (PIP + DIP) / 2",
+    "links": [],
+    "isArchived": false,
+    "order": 61,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-prob3",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Problema 3: Colisão e proximidade excessiva entre os dedos 3D",
+    "description": "Sintoma: Na simulação 3D, as geometrias dos dedos adjacentes colidiam e se sobrepunham durante a flexão.\n\nCausa Raiz: Espaçamento de montagem na base dos metacarpos insuficiente e falta de rotação angular de leque (fan splay de repouso).\n\nSolução: Ajuste paramétrico dos offsets em buildSingleHand e calibração das distâncias anatômicas entre bases articulares.\n\nArquivos envolvidos: módulo de montagem da mão 3D Three.js.\n\nTestes que comprovam: Inspeção visual de punho cerrado no Three.js.\n\nStatus: Solução implementada e validada com sucesso na simulação 3D Three.js.",
+    "priority": "medium",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-correcoes",
+      "lbl-simulacao"
+    ],
+    "checklists": [
+      {
+        "id": "chk-p3-1",
+        "text": "Conferir offsets em buildSingleHand",
+        "completed": true
+      },
+      {
+        "id": "chk-p3-2",
+        "text": "Inspecionar ausência de sobreposição de malhas 3D",
+        "completed": true
+      }
+    ],
+    "notes": "Melhoria na geometria 3D do modelo InMoov.",
+    "links": [],
+    "isArchived": false,
+    "order": 62,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  },
+  {
+    "id": "card-tcc-prob4",
+    "boardId": "board-tcc-inmoov",
+    "columnId": "col-tcc-done",
+    "title": "Problema 4: Inversão da abertura lateral dos dedos (Splay)",
+    "description": "Sintoma: Ao afastar os dedos na câmera, os dedos virtuais se fechavam em direção ao centro da mão (movimento invertido).\n\nCausa Raiz: O produto escalar (v_ray · v_XBasis) possuía convenção de sinal oposta ao sentido de rotação positiva do eixo Z local no Three.js.\n\nSolução: Adição do sinal negativo na equação do splay: θz = -(v_ray · v_XBasis) · K.\n\nArquivos envolvidos: módulo de cinemática dos dedos e rotações 3D.\n\nTestes que comprovam: Teste de abdução/adução em tempo real.\n\nStatus: Solução implementada e validada com sucesso nos testes automatizados (test_four_scenarios).",
+    "priority": "urgent",
+    "dueDate": "2026-09-25",
+    "labels": [
+      "lbl-correcoes",
+      "lbl-simulacao",
+      "lbl-matematica"
+    ],
+    "checklists": [
+      {
+        "id": "chk-p4-1",
+        "text": "Conferir presença do sinal negativo: θz = -(v_ray · v_XBasis) · K",
+        "completed": true
+      },
+      {
+        "id": "chk-p4-2",
+        "text": "Validar teste de abertura lateral com a webcam",
+        "completed": true
+      }
+    ],
+    "notes": "Fórmula aplicada: θz = -(v_ray · v_XBasis) · K",
+    "links": [],
+    "isArchived": false,
+    "order": 63,
+    "createdAt": "2026-10-29T19:23:16.153Z",
+    "updatedAt": "2026-10-29T19:23:16.153Z"
+  }
+];
+
+  const INITIAL_SETTINGS = {
+  "theme": "dark",
+  "activeBoardId": "board-tcc-inmoov",
+  "enableSound": true,
+  "enableConfetti": true,
+  "compactCards": false
+};
+
+  const DEFAULT_COLUMN_TEMPLATES = [
+    { title: 'Backlog', subtitle: 'Demandas pendentes', color: '#64748b', order: 0 },
+    { title: 'A Fazer / To Do', subtitle: 'Planejado para execução imediata', color: '#3b82f6', order: 1 },
+    { title: 'Em Andamento / In Progress', subtitle: 'Tarefas em desenvolvimento', color: '#f59e0b', order: 2 },
+    { title: 'Revisão / Homologação', subtitle: 'Testes, validação e QA', color: '#a855f7', order: 3 },
+    { title: 'Concluído / Done', subtitle: 'Entregas finalizadas', color: '#10b981', order: 4 },
+  ];
+
+  global.KanbanInitialData = {
+    INITIAL_LABELS,
+    INITIAL_BOARD,
+    INITIAL_COLUMNS,
+    INITIAL_CARDS,
+    TCC_LABELS,
+    TCC_BOARD,
+    TCC_COLUMNS,
+    TCC_CARDS,
+    INITIAL_SETTINGS,
+    DEFAULT_COLUMN_TEMPLATES,
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
